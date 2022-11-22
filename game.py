@@ -26,6 +26,7 @@ while run:
 
     clock.tick(FPS)
     screen.blit(bg_img, (0, 0))
+    screen.blit(platform, (20, 40))
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
