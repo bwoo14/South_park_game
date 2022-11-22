@@ -85,6 +85,9 @@ class Character:
         dy += self.vel_y
         # Check for collision
 
+        
+
+
         # Update player coordinates
         self.rect.x += dx
         self.rect.y += dy

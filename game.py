@@ -2,6 +2,8 @@ import pygame
 from pygame.locals import *
 from models.character import Character
 from global_variables import *
+from models.platform import Platform
+from models.world import World
 pygame.init()
 
 clock = pygame.time.Clock()
@@ -15,19 +17,18 @@ pygame.display.set_caption('South Park Game')
 
 # Load Images
 
-bg_img = pygame.image.load('images/background.jpg')
-bg_img = pygame.transform.scale(bg_img, (SCREEN_WIDTH, SCREEN_HEIGHT))
-platform = pygame.image.load('images/platform.png')
-
+platform = Platform()
+world = World()
 character = Character('Cartman', 480, 270)
 
 run = True
 while run:
 
     clock.tick(FPS)
-    screen.blit(bg_img, (0, 0))
-    screen.blit(platform, (20, 40))
+    world.draw(screen)
+    platform.draw(screen)
 
+    
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             run = False
