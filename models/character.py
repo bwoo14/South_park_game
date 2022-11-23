@@ -5,14 +5,15 @@ from global_variables import *
 import pygame
 
 DEFAULT_IMAGE_SIZE = (100, 100)
-walk_cooldown = 10
-class Character:
+
+class Character(pygame.sprite.Sprite):
     def __init__(self, character, x, y):
         if character == 'Cartman':
             self.images_right = []
             self.images_left = []
-            self.index = 1
-            self.counter = 0
+            self.index = 1 # Starting image for walking animation
+            self.counter = 0 # Handles the animation (each frame)
+            self.walk_cooldown = 7 # Determines speed of animation
 
             # Getting images for guy walking right
             for num in range(1, 5):
@@ -47,15 +48,15 @@ class Character:
             self.jumped = True
         if key[pygame.K_SPACE] == False:
             self.jumped = False
-        if key[pygame.K_LEFT]:
+        if key[pygame.K_a]:
             dx -= 5
             self.counter += 1
             self.direction = -1
-        if key[pygame.K_RIGHT]:
+        if key[pygame.K_d]:
             dx += 5
             self.counter += 1
             self.direction = 1
-        if key[pygame.K_LEFT] == False and key[pygame.K_RIGHT] == False:
+        if key[pygame.K_a] == False and key[pygame.K_d] == False:
             # If neither keys are pushed, put character back to starting image.
             self.counter = 0
             self.index = 1
@@ -67,7 +68,7 @@ class Character:
 
         # Handle animation
         
-        if self.counter > walk_cooldown:
+        if self.counter > self.walk_cooldown:
             self.counter = 0
             self.index += 1
             if self.index >= len(self.images_right):
@@ -80,8 +81,9 @@ class Character:
         # add gravity
         
         self.vel_y += 2
-        if self.vel_y > 15:
-            self.vel_y = 15
+        # if self.vel_y > 15:  # Terminal velocity is 15
+        #     self.vel_y = 15
+            
         dy += self.vel_y
         # Check for collision
 

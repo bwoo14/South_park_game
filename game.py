@@ -6,61 +6,59 @@ from models.platform import Platform
 from models.world import World
 from models.button import Button
 import math
+from screens.gamescreen import GameScreen
+from screens.mainmenu import MainMenu
 pygame.init()
 
-clock = pygame.time.Clock()
 
 
-screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
-pygame.display.set_caption('South Park Game')
+class Game:
+    def __init__(self):
+        self.window = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+        self.world = World()
 
-# Define Game Variables
-tiles = math.ceil((SCREEN_WIDTH) / SCREEN_WIDTH) + 1
+    # def play_game(self):
+    #     run = True
+    #     character = Character('Cartman', 480, 270)
+    #     while run:
+    #         clock.tick(FPS)
+    #         self.world.draw(self.screen)
+    #         character.update(self.screen)
+    #         for event in pygame.event.get():
+    #             if event.type == pygame.QUIT:
+    #                 run = False
+    #         pygame.display.update()
+    #     pygame.quit()
 
-# Load Images
+    def pause(self):
+        pass
 
-platform = Platform()
-world = World()
-
-character = Character('Cartman', 480, 270)
-
-def play_game():
-    run = True
-    while run:
-        clock.tick(FPS)
-        world.draw(screen, tiles)
-        character.update(screen)
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
+    def run(self):
+        # Define Game Variables
+        tiles = math.ceil((SCREEN_WIDTH) / SCREEN_WIDTH) + 1
+        screens = {
+            "menu": MainMenu,
+            "game": GameScreen
+        }
+        run = True
+        current_screen = "menu"
+        while run:
+            screen_class = screens.get(current_screen)
+            screen = screen_class(self.window)
+            screen.run()
+            if screen.next_screen is False:
                 run = False
-        pygame.display.update()
+            current_screen = screen.next_screen
+            
+            
+        pygame.quit()
 
-def pause():
-    pass
-
-def main_menu():
-    menu_image = pygame.image.load('images/main-menu.png')
-    menu_image = pygame.transform.scale(menu_image, (SCREEN_WIDTH, SCREEN_HEIGHT))
-    logo = pygame.image.load('images/logo.png').convert()
-    logo_rect = logo.get_rect()
-    logo_rect.center = (SCREEN_WIDTH/2, 75)
-    
-
-    run = True
-    while run:
-        clock.tick(FPS)
         
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                run = False
-        screen.blit(menu_image, (0, 0))
-        screen.blit(logo, logo_rect)
-        pygame.display.update()
+
+game = Game()
+game.run()       
 
 
 
 
-main_menu()
 
-
-pygame.quit()
