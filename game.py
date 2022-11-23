@@ -3,7 +3,6 @@ from pygame.locals import *
 from models.character import Character
 from global_variables import *
 from models.platform import Platform
-from models.world import World
 from models.button import Button
 import math
 from screens.gamescreen import GameScreen
@@ -15,7 +14,6 @@ pygame.init()
 class Game:
     def __init__(self):
         self.window = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
-        self.world = World()
 
     # def play_game(self):
     #     run = True
@@ -30,18 +28,15 @@ class Game:
     #         pygame.display.update()
     #     pygame.quit()
 
-    def pause(self):
-        pass
 
     def run(self):
         # Define Game Variables
-        tiles = math.ceil((SCREEN_WIDTH) / SCREEN_WIDTH) + 1
         screens = {
             "menu": MainMenu,
             "game": GameScreen
         }
         run = True
-        current_screen = "menu"
+        current_screen = "game"
         while run:
             screen_class = screens.get(current_screen)
             screen = screen_class(self.window)

@@ -42,4 +42,3 @@ class MainMenu(BaseScreen):
             mouse_pos = pygame.mouse.get_pos() # get the mouse pos 
             if self.start_button_rect.collidepoint(mouse_pos): #checking if the mouse_pos is inside the rectangle 
                 self.next_screen = 'game'
-                print('hello')

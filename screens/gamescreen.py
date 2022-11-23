@@ -11,6 +11,23 @@ class GameScreen(BaseScreen):
         self.img_width = self.bg_img.get_width()
         self.character = Character('Cartman', 480, 270)
 
+        floor_height = 600
+        self.road = pygame.Rect(0, floor_height, SCREEN_WIDTH, 100)
+
     def draw(self):
         self.window.blit(self.bg_img, (0, 0))
-        self.character.update(self.window)
+
+
+        if self.road.colliderect(self.character.rect):
+            self.character.update(self.window, ground_collision=True)
+        else:
+            self.character.update(self.window)
+        
+
+    # def update(self):
+        
+    #     self.character.update(self.window)
+        
+
+    def manage_event(self, event):
+        pass

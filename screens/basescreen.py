@@ -27,7 +27,7 @@ class BaseScreen:
             # Tick the clock
             clock.tick(60)
             # Do whatever is needed to update the screen objects
-            #self.update()
+            # self.update()
             # Draw the objects on the screen
             self.draw()
             # Update the display

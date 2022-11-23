@@ -35,15 +35,16 @@ class Character(pygame.sprite.Sprite):
             self.vel_y = 0
             self.jumped = False
             self.direction = 0
-    
-    def update(self, screen):
+            self.width = self.image.get_width()
+            self.height = self.image.get_height()
+    def update(self, screen, ground_collision=False):
 
         dx = 0
         dy = 0
         
         # Get key presses
         key = pygame.key.get_pressed()
-        if key[pygame.K_SPACE] and self.jumped == False:
+        if key[pygame.K_SPACE] and self.jumped == False and ground_collision:
             self.vel_y = -25
             self.jumped = True
         if key[pygame.K_SPACE] == False:
@@ -87,8 +88,9 @@ class Character(pygame.sprite.Sprite):
         dy += self.vel_y
         # Check for collision
 
-        
-
+        # Check if character is falling to ground
+        if ground_collision and self.vel_y >= 0:
+            dy = 0
 
         # Update player coordinates
         self.rect.x += dx
@@ -111,4 +113,3 @@ class Character(pygame.sprite.Sprite):
             self.rect.top = 0
 
         screen.blit(self.image, self.rect)
-        pygame.draw.rect(screen, (255, 255, 255), self.rect, 2)
