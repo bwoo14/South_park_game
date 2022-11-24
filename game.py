@@ -10,27 +10,34 @@ from screens.mainmenu import MainMenu
 pygame.init()
 
 
+###
+# TODO:
+#
+# Add combo multiplier to score
+#
+#
+# make boss characters
+# - each boss has a special ability
+
+# make player class
+# - contains a character
+
+# make web server that holds the high scores
+# - contains the image of the character that score was achieved with
+###
+
 
 class Game:
+    """
+    The game class that will run the entire game
+    """
     def __init__(self):
         self.window = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 
-    # def play_game(self):
-    #     run = True
-    #     character = Character('Cartman', 480, 270)
-    #     while run:
-    #         clock.tick(FPS)
-    #         self.world.draw(self.screen)
-    #         character.update(self.screen)
-    #         for event in pygame.event.get():
-    #             if event.type == pygame.QUIT:
-    #                 run = False
-    #         pygame.display.update()
-    #     pygame.quit()
-
-
     def run(self):
-        # Define Game Variables
+        """
+        Method to start the game
+        """
         screens = {
             "menu": MainMenu,
             "game": GameScreen
@@ -39,6 +46,10 @@ class Game:
         current_screen = "game"
         while run:
             screen_class = screens.get(current_screen)
+            if screen_class == None:
+                run = False
+                print("Screen does not exist")
+                break
             screen = screen_class(self.window)
             screen.run()
             if screen.next_screen is False:
