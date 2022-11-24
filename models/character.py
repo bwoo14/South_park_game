@@ -53,10 +53,13 @@ class Character(pygame.sprite.Sprite):
         self.height = self.image.get_height()
 
 
-    def shoot(self, screen):
+    def update(self, screen):
         projectile = Projectile(self)
         projectile.draw(screen)
 
 
     def get_position(self):
         return (self.rect.x, self.rect.y)
+
+    def get_projectile(self):
+        return Projectile(self)

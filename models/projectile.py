@@ -1,18 +1,26 @@
 import pygame
 
-class Projectile(pygame.sprite.Group):
+class Projectile(pygame.sprite.Sprite):
     """ Class for projectiles """
     def __init__(self, character=None):
         """
         takes a Character Object
         """
-
         self.projectile_img = pygame.image.load(f'images/{character.character_name}-projectile.png')
         self.rect = self.projectile_img.get_rect()
-        self.x = character.get_position()[0]
-        self.y = character.get_position()[1]
+        self.y_vel = 0
+        self.x_vel = 5
+        self.rect.x = character.get_position()[0]
+        self.rect.y = character.get_position()[1]
 
     def draw(self, screen):
-        
-        screen.blit(self.projectile_img, (0, 0))
-        pygame.draw.circle(screen, 'blue', (100, 100), 150)
+        screen.blit(self.projectile_img, self.rect)
+
+    def update(self, screen):
+        self.rect.x += self.x_vel
+        self.rect.y += self.y_vel
+        screen.blit(self.projectile_img, self.rect)
+
+    def get_position(self):
+         return (self.rect.x, self.rect.y)
+

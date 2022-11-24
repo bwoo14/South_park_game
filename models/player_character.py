@@ -16,7 +16,7 @@ class PlayerCharacter(Character):
         # Get key presses
         key = pygame.key.get_pressed()
         if key[pygame.K_SPACE] and self.jumped == False and ground_collision:
-            self.vel_y = -25
+            self.vel_y = -35
             self.jumped = True
         if key[pygame.K_SPACE] == False:
             self.jumped = False

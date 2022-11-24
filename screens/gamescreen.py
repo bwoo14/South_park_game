@@ -4,6 +4,7 @@ from global_variables import *
 from models.character import Character
 from models.player_character import PlayerCharacter
 from models.boss import Boss
+import random
 
 class GameScreen(BaseScreen):
     """ The game screen for the game """
@@ -13,7 +14,8 @@ class GameScreen(BaseScreen):
         self.bg_img = pygame.transform.scale(bg_img, (SCREEN_WIDTH, SCREEN_HEIGHT))
         self.img_width = self.bg_img.get_width()
         self.character = PlayerCharacter('cartman', 480, 270)
-        self.satan = Boss('satan', 0, 500)
+        self.bosses = [Boss('satan', 0, 100)]
+        self.projectiles = []
 
         floor_height = 600
         self.road = pygame.Rect(0, floor_height, SCREEN_WIDTH, 100)
@@ -24,17 +26,28 @@ class GameScreen(BaseScreen):
         """
         self.window.blit(self.bg_img, (0, 0))
 
-        if self.character.rect.bottom > self.satan.rect.bottom:
+        if self.character.get_position()[0] > self.bosses[0].get_position()[0]:
             move_pref = 'right'
-        elif self.character.rect.bottom <= self.satan.rect.bottom:
+        elif self.character.get_position()[0] <= self.bosses[0].get_position()[0]:
             move_pref = 'left'
 
-        
+        shoot_chance = random.randint(1, 100)
+        if shoot_chance == 1:
+            projectile = self.bosses[0].get_projectile()
+            projectile.draw(self.window)
+            self.projectiles.append(projectile)
+
+        for projectile in self.projectiles:
+            projectile.update(self.window)
+            if projectile.get_position()[0] < 0 or projectile.get_position()[0] > SCREEN_WIDTH:
+                self.projectiles.remove(projectile)
+
+
         character_ground = self.ground_collision(self.character)
-        boss_ground = self.ground_collision(self.satan)
+        boss_ground = self.ground_collision(self.bosses[0])
 
         self.character.update(self.window, character_ground)
-        self.satan.update(self.window, boss_ground, move_pref)
+        self.bosses[0].update(self.window, boss_ground, move_pref)
         
         
 

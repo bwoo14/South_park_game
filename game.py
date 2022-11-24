@@ -43,7 +43,7 @@ class Game:
             "game": GameScreen
         }
         run = True
-        current_screen = "game"
+        current_screen = "menu"
         while run:
             screen_class = screens.get(current_screen)
             if screen_class == None:
