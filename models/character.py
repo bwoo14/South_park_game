@@ -8,13 +8,14 @@ import pygame
 CARTMAN = (100, 100)
 
 class Character(pygame.sprite.Sprite):
-    def __init__(self, character, x, y):
+    def __init__(self, character, x, y, health = 100):
         self.character_name = character
         self.images_right = []
         self.images_left = []
         self.index = 1 # Starting image for walking animation
         self.counter = 0 # Handles the animation (each frame)
         self.walk_cooldown = 7 # Determines speed of animation
+        self.health = health
         
         # if character is not of the player character type, return false
         if character in ['cartman']:
@@ -61,5 +62,5 @@ class Character(pygame.sprite.Sprite):
     def get_position(self):
         return (self.rect.x, self.rect.y)
 
-    def get_projectile(self):
+    def get_projectile(self, character=None):
         return Projectile(self)

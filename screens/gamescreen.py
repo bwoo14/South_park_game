@@ -8,17 +8,18 @@ import random
 
 class GameScreen(BaseScreen):
     """ The game screen for the game """
-    def __init__(self, screen):
+    def __init__(self, screen, selected_character):
         super().__init__(screen)
         bg_img = pygame.image.load('images/background.jpg').convert()
         self.bg_img = pygame.transform.scale(bg_img, (SCREEN_WIDTH, SCREEN_HEIGHT))
         self.img_width = self.bg_img.get_width()
-        self.character = PlayerCharacter('cartman', 480, 270)
-        self.bosses = [Boss('satan', 0, 100)]
+        self.character = PlayerCharacter(selected_character, 480, 270, health=100)
+        self.bosses = [Boss('satan', 0, 100, health = 1000)]
         self.projectiles = []
-
+        self.level = 0
         floor_height = 600
         self.road = pygame.Rect(0, floor_height, SCREEN_WIDTH, 100)
+        self.score = 0
 
     def draw(self):
         """
@@ -26,34 +27,49 @@ class GameScreen(BaseScreen):
         """
         self.window.blit(self.bg_img, (0, 0))
 
-        if self.character.get_position()[0] > self.bosses[0].get_position()[0]:
+
+        # If character is to the right of the boss, move boss to the right, same with left
+        if self.character.get_position()[0] > self.bosses[self.level].get_position()[0]:
             move_pref = 'right'
-        elif self.character.get_position()[0] <= self.bosses[0].get_position()[0]:
+        elif self.character.get_position()[0] <= self.bosses[self.level].get_position()[0]:
             move_pref = 'left'
 
+        # 1 in a 100 chance of a boss shooting a projectile
         shoot_chance = random.randint(1, 100)
         if shoot_chance == 1:
-            projectile = self.bosses[0].get_projectile()
+            # Get the boss' projectile
+            projectile = self.bosses[self.level].get_projectile()
+            # Draw it on the screen
             projectile.draw(self.window)
+            # add it to the projectile list
             self.projectiles.append(projectile)
 
+        # Draw each projectile in the projectile list
         for projectile in self.projectiles:
             projectile.update(self.window)
-            if projectile.get_position()[0] < 0 or projectile.get_position()[0] > SCREEN_WIDTH:
+
+            # Check if boss projectile hit player
+            if isinstance(projectile.character, Boss) and projectile.rect.colliderect(self.character.rect):
+                self.projectiles.remove(projectile)
+                self.character.health -= 10
+            # If boss projectile hits the player, take damage
+
+            # If projectile goes off the screen, remove it from the projectile list
+            elif projectile.get_position()[0] < 0 or projectile.get_position()[0] > SCREEN_WIDTH:
                 self.projectiles.remove(projectile)
 
 
         character_ground = self.ground_collision(self.character)
-        boss_ground = self.ground_collision(self.bosses[0])
+        boss_ground = self.ground_collision(self.bosses[self.level])
+
 
         self.character.update(self.window, character_ground)
-        self.bosses[0].update(self.window, boss_ground, move_pref)
-        
-        
+        self.bosses[self.level].update(self.window, boss_ground, move_pref)
 
-    # def update(self):
+        # Did the character die xd
+        if self.character.health <= 0:
+            pygame.draw.line(self.window, 'black', (0, 0), (SCREEN_WIDTH, SCREEN_HEIGHT))
         
-    #     self.character.update(self.window)
         
     def ground_collision(self, character):
         if self.road.colliderect(character.rect):
@@ -67,5 +83,6 @@ class GameScreen(BaseScreen):
         # If mouse click inside start button, start game
         if event.type == pygame.MOUSEBUTTONDOWN:
             mouse_pos = pygame.mouse.get_pos() # get the mouse pos 
-            self.character.shoot(self.window)
+            projectile = self.character.get_projectile(self.character)
+            self.projectiles.append(projectile)
                 

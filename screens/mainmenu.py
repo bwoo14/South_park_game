@@ -1,7 +1,6 @@
 from screens.basescreen import BaseScreen
 import pygame
 from global_variables import *
-from models.button import Button
 
 class MainMenu(BaseScreen):
     """ The main menu screen for the game """
@@ -38,4 +37,4 @@ class MainMenu(BaseScreen):
         if event.type == pygame.MOUSEBUTTONDOWN:
             mouse_pos = pygame.mouse.get_pos() # get the mouse pos 
             if self.start_button_rect.collidepoint(mouse_pos): #checking if the mouse_pos is inside the rectangle 
-                self.next_screen = 'game'
+                self.next_screen = 'charselect'

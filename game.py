@@ -5,8 +5,11 @@ from global_variables import *
 from models.platform import Platform
 from models.button import Button
 import math
-from screens.gamescreen import GameScreen
-from screens.mainmenu import MainMenu
+# from screens.gamescreen import GameScreen
+# from screens.mainmenu import MainMenu
+# from screens.choosecharacterscreen import ChooseCharacterScreen
+
+from screens import GameScreen, MainMenu, ChooseCharacterScreen
 pygame.init()
 
 
@@ -40,18 +43,30 @@ class Game:
         """
         screens = {
             "menu": MainMenu,
-            "game": GameScreen
+            "game": GameScreen,
+            "charselect": ChooseCharacterScreen
         }
         run = True
         current_screen = "menu"
+        selected_character = None
         while run:
             screen_class = screens.get(current_screen)
             if screen_class == None:
                 run = False
                 print("Screen does not exist")
                 break
-            screen = screen_class(self.window)
+
+            # Check to see if the next screen is the game screen, if it is: send the selected character
+            if screen_class == GameScreen:
+                screen = screen_class(self.window, selected_character)
+            else:
+                screen = screen_class(self.window)
             screen.run()
+
+            if screen.chosen_character is not None:
+                selected_character = screen.chosen_character
+            
+
             if screen.next_screen is False:
                 run = False
             current_screen = screen.next_screen

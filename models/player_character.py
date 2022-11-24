@@ -37,6 +37,7 @@ class PlayerCharacter(Character):
             if self.direction == -1:
                 self.image = self.images_left[self.index]
         
+        
         # self.shoot(screen)
 
         # Handle animation
@@ -85,3 +86,4 @@ class PlayerCharacter(Character):
             self.rect.top = 0
 
         screen.blit(self.image, self.rect)
+
