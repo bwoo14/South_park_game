@@ -10,6 +10,7 @@ class BaseScreen:
         # By default, there is no next screen (= game quits)
         self.next_screen = False
         self.chosen_character = None
+        self.game_over = False
 
     def run(self):
         """
