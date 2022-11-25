@@ -1,38 +1,51 @@
 [
     {
+        "score_id": "fffffffffffffffffff",
         "username": "bobby",
         "score": "50",
         "character": "cartman",
         "date": "01/01/2002"
     },
     {
-        "username": "john",
-        "score": "10",
-        "character": "kyle",
+        "score_id": "fffffff234fffffffffff",
+        "username": "bobby",
+        "score": "50",
+        "character": "cartman",
         "date": "01/01/2002"
     },
     {
-        "username": "john",
-        "score": "10",
-        "character": "kyle",
-        "date": "01/01/2002"
-    },
-    {
-        "username": "john",
-        "score": "10",
-        "character": "kyle",
-        "date": "01/01/2002"
-    },
-    {
-        "username": "J8HP608E8QT8NG2J4Z4C",
-        "score": 400,
+        "score_id": "31KJ0QBCMH4EIYH4CL46",
+        "username": "8WE66451KVSPJVM3AOS4",
+        "score": -5,
         "character": "stan",
         "date": "0"
     },
     {
-        "username": "FYPV29N43VC4PKGU770K",
+        "score_id": "S0WHA5ITXD6OLWWSSTET",
+        "username": "bobby",
         "score": -5,
-        "character": "kyle",
+        "character": null,
+        "date": "0"
+    },
+    {
+        "score_id": "VXIR535F4RQ9TWXCH4DV",
+        "username": "rob",
+        "score": -5,
+        "character": null,
+        "date": "0"
+    },
+    {
+        "score_id": "TPLMD2PGPILKYH0UKHJD",
+        "username": "timmy",
+        "score": -5,
+        "character": null,
+        "date": "0"
+    },
+    {
+        "score_id": "DLHJS0F0M9BKRYBTGZ02",
+        "username": "timmy",
+        "score": -5,
+        "character": "stan",
         "date": "0"
     }
 ]

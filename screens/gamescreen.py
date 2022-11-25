@@ -93,47 +93,34 @@ class GameScreen(BaseScreen):
                 self.game_over = True
         else:
             # TEMPORARY
-
-            if not self.recorded:
-                score = {
-                    "username": ''.join(random.choices(string.ascii_uppercase + string.digits, k=20)),
-                    "score": self.score,
-                    "character": self.character.character_name,
-                    "date": "0"
-                }
-                self.record_score(score)
             
-            self.game_over_overlay()
+            self.call_game_over()
             # self.next_screen = 'charselect'
             
-    def game_over_overlay(self):
+    def call_game_over(self):
         #self.window.blit(self.game_over_img, self.game_over_img_rect)
         #self.window.blit(self.play_again, self.play_again_rect)
-
-        for event in pygame.event.get():
-            self.manage_event(event)
+        self.final_score = self.score
+        self.next_screen = 'gameover'
             
-    def record_score(self, score):
-        """
-        sends a post request to the server with the score json file
-        """
-        # UNCOMMENT THIS BLOCK TO WRITE TO THE JSON FILE LOCALLY
-        # with open('scores/scores.json','r+') as file:
-        #     file_data = json.load(file)
-        #     file_data.append(score)
-        #     file.seek(0)
-        #     json.dump(file_data, file, indent = 4)
-        url = 'http://127.0.0.1:5000/submitscore'
-        try:
-            x = requests.post(url, json = score)
-            print(x.text)
-        except:
-            print('Server is Down')
+    # def record_score(self, score):
+    #     """
+    #     sends a post request to the server with the score json file
+    #     """
+    #     # UNCOMMENT THIS BLOCK TO WRITE TO THE JSON FILE LOCALLY
+    #     # with open('scores/scores.json','r+') as file:
+    #     #     file_data = json.load(file)
+    #     #     file_data.append(score)
+    #     #     file.seek(0)
+    #     #     json.dump(file_data, file, indent = 4)
+    #     url = 'http://127.0.0.1:5000/submitscore'
+    #     try:
+    #         x = requests.post(url, json = score)
+    #         print(x.text)
+    #     except:
+    #         print('Server is Down')
         
-        self.recorded = True
-        
-
-        
+    #     self.recorded = True
         
     def ground_collision(self, character):
         """
@@ -147,11 +134,6 @@ class GameScreen(BaseScreen):
         """
         handles the events (key strokes) that occur 
         """
-        if event.type == pygame.MOUSEBUTTONDOWN and self.game_over:
-            mouse_pos = pygame.mouse.get_pos() # get the mouse pos 
-            if self.play_again_rect.collidepoint(mouse_pos): #checking if the mouse_pos is inside the rectangle 
-                self.next_screen = 'charselect'
-
         if event.type == pygame.MOUSEBUTTONDOWN:
             end_x, end_y = pygame.mouse.get_pos() # get the mouse pos 
             start_x = self.character.get_position()[0]

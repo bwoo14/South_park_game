@@ -11,6 +11,7 @@ class BaseScreen:
         self.next_screen = False
         self.chosen_character = None
         self.game_over = False
+        self.final_score = None
 
     def run(self):
         """

@@ -13,6 +13,12 @@ class ScoreList:
             file.seek(0)
             json.dump(file_data, file, indent = 4)
 
+    def get_score(self, id):
+        for score in self.scores:
+            if score['score_id'] == id:
+                return score
+           
+
 if __name__ == '__main__':
     s = ScoreList()
-    print(s.scores)
+    print(s.get_score("fffffffffffffffffff"))

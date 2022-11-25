@@ -4,11 +4,19 @@ from models.scorelist import ScoreList
 
 app = Flask(__name__)
 
+@app.route("/score_id", methods=['GET'])
 @app.route("/")
 def home():
     scores = ScoreList()
     return render_template("home.html", scores=scores.scores)
 
+@app.route("/score_info/<string:score_id>", methods=['GET'])
+def score_info(score_id):
+    print(score_id)
+    scores = ScoreList()
+    score = scores.get_score(score_id)
+    print(score)
+    return render_template("view_score.html", score_data=score)
 
 
 @app.route("/submitscore", methods=['POST'])
