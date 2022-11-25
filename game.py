@@ -1,9 +1,6 @@
 import pygame
 from pygame.locals import *
-from models.character import Character
 from global_variables import *
-from models.platform import Platform
-from models.button import Button
 import math
 # from screens.gamescreen import GameScreen
 # from screens.mainmenu import MainMenu

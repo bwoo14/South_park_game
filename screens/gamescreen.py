@@ -4,7 +4,10 @@ from global_variables import *
 from models.character import Character
 from models.player_character import PlayerCharacter
 from models.boss import Boss
+from models.input_box import InputBox
 import random
+import json
+import string
 
 class GameScreen(BaseScreen):
     """ The game screen for the game """
@@ -21,6 +24,7 @@ class GameScreen(BaseScreen):
         self.road = pygame.Rect(0, floor_height, SCREEN_WIDTH, 100)
         self.score = 0
         self.font = pygame.font.Font('C:\WINDOWS\Fonts\ARIALN.TTF', 20)
+        self.recorded = False
         
 
     def draw(self):
@@ -68,6 +72,9 @@ class GameScreen(BaseScreen):
             score = self.font.render("Score:"+str(self.score), True, 'black', None)
             self.window.blit(score, (0,0))
 
+            health = self.font.render("Health:"+str(self.character.health), True, 'black', None)
+            self.window.blit(health, (SCREEN_WIDTH - health.get_width(), 0))
+
             character_ground = self.ground_collision(self.character)
             boss_ground = self.ground_collision(self.bosses[self.level])
 
@@ -79,9 +86,30 @@ class GameScreen(BaseScreen):
             if self.character.health <= 0:
                 pygame.draw.line(self.window, 'black', (0, 0), (SCREEN_WIDTH, SCREEN_HEIGHT))
                 self.game_over = True
-        # else:
-        #     pygame.quit()
-        
+        else:
+            # TEMPORARY
+
+            if not self.recorded:
+                score = {
+                    "username": ''.join(random.choices(string.ascii_uppercase + string.digits, k=20)),
+                    "score": self.score,
+                    "character": self.character.character_name,
+                    "date": "0"
+                }
+                self.record_score(score)
+            
+
+            
+    def record_score(self, score):
+        with open('scores/scores.json','r+') as file:
+            file_data = json.load(file)
+            file_data.append(score)
+            file.seek(0)
+            json.dump(file_data, file, indent = 4)
+        print(1)
+        self.recorded = True
+        self.next_screen = 'charselect'
+
         
         
     def ground_collision(self, character):

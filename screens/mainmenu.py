@@ -1,4 +1,4 @@
-from screens.basescreen import BaseScreen
+from screens import BaseScreen
 import pygame
 from global_variables import *
 
