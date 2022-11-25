@@ -1,7 +1,7 @@
 import pygame
 from pygame.locals import *
 from global_variables import *
-from components import Projectile, Character
+from .character import Character
 import random
 
 class Boss(Character):

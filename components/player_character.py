@@ -1,7 +1,8 @@
 import pygame
 from pygame.locals import *
 from global_variables import *
-from components import Projectile, Character
+from .projectile import Projectile 
+from .character import Character
 
 class PlayerCharacter(Character):
     def update(self, screen, ground_collision=False):

@@ -41,6 +41,10 @@ class ChooseCharacterScreen(BaseScreen):
                 self.chosen_character = 'cartman'
             elif self.stan_rect.collidepoint(mouse_pos):
                 self.chosen_character = 'stan'
+            elif self.kyle_rect.collidepoint(mouse_pos):
+                self.chosen_character = 'kyle'
+            elif self.kenny_rect.collidepoint(mouse_pos):
+                self.chosen_character = 'kenny'
             
             # !!! add kenny and kyle
                 

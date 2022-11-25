@@ -1,7 +1,7 @@
 import pygame
 from pygame.locals import *
 from global_variables import *
-from components import Projectile
+from .projectile import Projectile
 
 import pygame
 
@@ -18,7 +18,7 @@ class Character(pygame.sprite.Sprite):
         self.health = health
         
         # if character is not of the player character type, return false
-        if character in ['cartman']:
+        if character in ['cartman', 'stan', 'kyle', 'kenny']:
             self.is_player_character = True
         else:
             self.is_player_character = False
