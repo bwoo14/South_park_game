@@ -6,6 +6,7 @@ import random
 import json
 import string
 import math
+import requests
 
 class GameScreen(BaseScreen):
     """ The game screen for the game """
@@ -27,14 +28,13 @@ class GameScreen(BaseScreen):
         self.score = 0
         self.font = pygame.font.Font('C:\WINDOWS\Fonts\ARIALN.TTF', 20)
         self.recorded = False
-        self.game_over_img = pygame.image.load('images/game-over.png')
-        self.game_over_img_rect = self.game_over_img.get_rect(center=(SCREEN_WIDTH/2, SCREEN_HEIGHT/2 - 50))
+       
 
-        self.play_again = pygame.image.load('images/play-again.png')
-        self.play_again_rect = self.play_again.get_rect(center=self.game_over_img_rect.bottom)
+        #self.play_again = pygame.image.load('images/play-again.png')
+       # self.play_again_rect = self.play_again.get_rect(center=self.game_over_img_rect.bottom)
         
-        self.exit = pygame.image.load('images/exit.png')
-        self.exit_rect = self.exit.get_rect(top=self.play_again_rect.bottom)
+        #self.exit = pygame.image.load('images/exit.png')
+        #self.exit_rect = self.exit.get_rect(top=self.play_again_rect.bottom)
     def draw(self):
         """
         Draw the background image and the character, also handles any collisions
@@ -107,21 +107,29 @@ class GameScreen(BaseScreen):
             # self.next_screen = 'charselect'
             
     def game_over_overlay(self):
-        self.window.blit(self.game_over_img, self.game_over_img_rect)
-        self.window.blit(self.play_again, self.play_again_rect)
+        #self.window.blit(self.game_over_img, self.game_over_img_rect)
+        #self.window.blit(self.play_again, self.play_again_rect)
 
         for event in pygame.event.get():
             self.manage_event(event)
             
     def record_score(self, score):
         """
-        records the score to a JSON file
+        sends a post request to the server with the score json file
         """
-        with open('scores/scores.json','r+') as file:
-            file_data = json.load(file)
-            file_data.append(score)
-            file.seek(0)
-            json.dump(file_data, file, indent = 4)
+        # UNCOMMENT THIS BLOCK TO WRITE TO THE JSON FILE LOCALLY
+        # with open('scores/scores.json','r+') as file:
+        #     file_data = json.load(file)
+        #     file_data.append(score)
+        #     file.seek(0)
+        #     json.dump(file_data, file, indent = 4)
+        url = 'http://127.0.0.1:5000/submitscore'
+        try:
+            x = requests.post(url, json = score)
+            print(x.text)
+        except:
+            print('Server is Down')
+        
         self.recorded = True
         
 
