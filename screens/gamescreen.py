@@ -1,10 +1,7 @@
 import pygame
 from screens.basescreen import BaseScreen
 from global_variables import *
-from models.character import Character
-from models.player_character import PlayerCharacter
-from models.boss import Boss
-from models.input_box import InputBox
+from components import Character, PlayerCharacter, Boss, InputBox
 import random
 import json
 import string

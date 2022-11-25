@@ -1,7 +1,7 @@
 import pygame
 from pygame.locals import *
 from global_variables import *
-from models.projectile import Projectile
+from components import Projectile
 
 import pygame
 
