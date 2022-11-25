@@ -62,8 +62,8 @@ class Character(pygame.sprite.Sprite):
     def get_position(self):
         return (self.rect.x, self.rect.y)
 
-    def get_projectile(self, x, y, dirx, diry):
-        return Projectile(x, y, dirx, diry, self)
+    def get_projectile(self, x, y, dirx, diry, speed=5):
+        return Projectile(x, y, dirx, diry, self, speed)
     
     def animate(self):
         if self.counter > self.walk_cooldown:

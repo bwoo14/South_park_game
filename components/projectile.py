@@ -2,7 +2,7 @@ import pygame
 
 class Projectile(pygame.sprite.Sprite):
     """ Class for projectiles """
-    def __init__(self, x, y, dirx, diry, character=None):
+    def __init__(self, x, y, dirx, diry, character=None, speed = 5):
         """
         takes a Character Object
         """
@@ -11,7 +11,7 @@ class Projectile(pygame.sprite.Sprite):
         self.rect = self.projectile_img.get_rect()
         # self.y_vel = 0
         # self.x_vel = 5
-        self.speed = 5
+        self.speed = speed
         self.dirx = dirx
         self.diry = diry
         self.rect.x = x

@@ -14,8 +14,12 @@ class GameScreen(BaseScreen):
         bg_img = pygame.image.load('images/background.jpg').convert()
         self.bg_img = pygame.transform.scale(bg_img, (SCREEN_WIDTH, SCREEN_HEIGHT))
         self.img_width = self.bg_img.get_width()
-        self.character = PlayerCharacter(selected_character, 480, 270, health=100)
-        self.bosses = [Boss('satan', 0, 100, health = 1000)]
+        self.character = PlayerCharacter(selected_character, 480, 270, health=10)
+        self.bosses = [ 
+                        Boss('kylesmom', 0, 100, health=500),
+                        Boss('snooki', 0, 100, health=500),
+                        Boss('satan', 0, 100, health = 500),
+        ]
         self.projectiles = []
         self.level = 0
         floor_height = 600
@@ -23,8 +27,12 @@ class GameScreen(BaseScreen):
         self.score = 0
         self.font = pygame.font.Font('C:\WINDOWS\Fonts\ARIALN.TTF', 20)
         self.recorded = False
-        
+        self.game_over_img = pygame.image.load('images/game-over.png')
+        self.game_over_img_rect = self.game_over_img.get_rect(center=(SCREEN_WIDTH/2, SCREEN_HEIGHT/2))
 
+        self.play_again = pygame.image.load('images/play-again.png')
+        play_again_x = self.game_over_img_rect.bottom - self.play_again.get_width()
+        self.play_again_rect = self.play_again.get_rect(center=(play_again_x, self.game_over_img_rect.bottom))
     def draw(self):
         """
         Draw the background image and the character, also handles any collisions
@@ -54,6 +62,7 @@ class GameScreen(BaseScreen):
                 elif isinstance(projectile.character, PlayerCharacter) and projectile.rect.colliderect(self.bosses[self.level]):
                     self.projectiles.remove(projectile)
                     self.score += 10
+                    self.bosses[self.level].health -= 10
                 # If boss projectile hits the player, take damage
 
                 # If projectile goes off the screen, remove it from the projectile list
@@ -72,6 +81,11 @@ class GameScreen(BaseScreen):
             self.character.update(self.window, character_ground)
             self.bosses[self.level].update(self.window, boss_ground, move_pref)
 
+
+            if self.bosses[self.level].health == 0:
+                self.level += 1
+                if self.level >= len(self.bosses):
+                    self.game_over = True
             # Did the character die
             if self.character.health <= 0:
                 self.game_over = True
@@ -87,7 +101,12 @@ class GameScreen(BaseScreen):
                 }
                 self.record_score(score)
             
-
+            self.game_over_overlay()
+            # self.next_screen = 'charselect'
+            
+    def game_over_overlay(self):
+        self.window.blit(self.game_over_img, self.game_over_img_rect)
+        self.window.blit(self.play_again, self.play_again_rect)
             
     def record_score(self, score):
         """
@@ -99,11 +118,14 @@ class GameScreen(BaseScreen):
             file.seek(0)
             json.dump(file_data, file, indent = 4)
         self.recorded = True
-        self.next_screen = 'charselect'
+        
 
         
         
     def ground_collision(self, character):
+        """
+        checks if the character is touching the ground
+        """
         if self.road.colliderect(character.rect):
             return True
        
@@ -148,7 +170,7 @@ class GameScreen(BaseScreen):
             distance = math.sqrt(dir_x**2 + dir_y**2)
             # Get the boss' projectile
             if distance > 0:
-                projectile = self.bosses[self.level].get_projectile(start_x, start_y, dir_x/distance, dir_y/distance)
+                projectile = self.bosses[self.level].get_projectile(start_x, start_y, dir_x/distance, dir_y/distance, speed=10)
                 # Draw it on the screen
                 projectile.draw(self.window)
                 # add it to the projectile list
