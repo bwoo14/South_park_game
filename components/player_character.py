@@ -42,22 +42,11 @@ class PlayerCharacter(Character):
 
         # Handle animation
         
-        if self.counter > self.walk_cooldown:
-            self.counter = 0
-            self.index += 1
-            if self.index >= len(self.images_right):
-                self.index = 0
-            if self.direction == 1:
-                self.image = self.images_right[self.index]
-            if self.direction == -1:
-                self.image = self.images_left[self.index]
+        self.animate()
 
         # add gravity
         
         self.vel_y += 2
-        # if self.vel_y > 15:  # Terminal velocity is 15
-        #     self.vel_y = 15
-            
         dy += self.vel_y
         # Check for collision
 
@@ -69,6 +58,11 @@ class PlayerCharacter(Character):
         self.rect.x += dx
         self.rect.y += dy
 
+        self.is_off_screen()
+
+        screen.blit(self.image, self.rect)
+
+    def is_off_screen(self):
         # Don't let player go below screen
         if self.rect.bottom > SCREEN_HEIGHT:
             self.rect.bottom = SCREEN_HEIGHT
@@ -84,6 +78,4 @@ class PlayerCharacter(Character):
         # Don't let player go above screen
         if self.rect.top < 0:
             self.rect.top = 0
-
-        screen.blit(self.image, self.rect)
 

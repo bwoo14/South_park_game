@@ -9,17 +9,17 @@ class ChooseCharacterScreen(BaseScreen):
         self.menu_image = pygame.transform.scale(menu_image, (SCREEN_WIDTH, SCREEN_HEIGHT))
         
 
-        self.cartman_image = self.load_image('images/cartman-front.png')
+        self.cartman_image = self.load_image('images/cartman/cartman-front.png')
         self.cart_rect = self.cartman_image.get_rect(center=(SCREEN_WIDTH/2 - 300, SCREEN_HEIGHT/2))
 
-        self.stan_image = self.load_image('images/stan-front.png')
+        self.stan_image = self.load_image('images/stan/stan-front.png')
         self.stan_rect = self.stan_image.get_rect(center=(SCREEN_WIDTH/2 - 100, SCREEN_HEIGHT/2))
 
         
-        self.kyle_image = self.load_image('images/kyle-front.png')
+        self.kyle_image = self.load_image('images/kyle/kyle-front.png')
         self.kyle_rect = self.kyle_image.get_rect(center=(SCREEN_WIDTH/2 + 100, SCREEN_HEIGHT/2))
 
-        self.kenny_image = self.load_image('images/kenny-front.png')
+        self.kenny_image = self.load_image('images/kenny/kenny-front.png')
         self.kenny_rect = self.kenny_image.get_rect(center=(SCREEN_WIDTH/2 + 300, SCREEN_HEIGHT/2))
 
         self.char_images = [self.cart_rect, self.stan_rect, self.kyle_rect, self.kenny_image]

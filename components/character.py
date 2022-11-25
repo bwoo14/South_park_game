@@ -26,7 +26,7 @@ class Character(pygame.sprite.Sprite):
         
         # Getting images for guy walking right
         for num in range(1, 5):
-            img_right = pygame.image.load(f'images/{character}side{num}.png')
+            img_right = pygame.image.load(f'images/{character}/{character}side{num}.png')
             if self.is_player_character:
                 img_right = pygame.transform.scale(img_right, CARTMAN)
             else:
@@ -37,7 +37,7 @@ class Character(pygame.sprite.Sprite):
         
         # Getting images for guy walking left
         for num in range(1, 5):
-            img_left = pygame.image.load(f'images/{character}side{num}.png')
+            img_left = pygame.image.load(f'images/{character}/{character}side{num}.png')
             if self.is_player_character:
                 img_left = pygame.transform.scale(img_left, CARTMAN)
             else:
@@ -64,3 +64,14 @@ class Character(pygame.sprite.Sprite):
 
     def get_projectile(self, character=None):
         return Projectile(self)
+    
+    def animate(self):
+        if self.counter > self.walk_cooldown:
+            self.counter = 0
+            self.index += 1
+            if self.index >= len(self.images_right):
+                self.index = 0
+            if self.direction == 1:
+                self.image = self.images_right[self.index]
+            if self.direction == -1:
+                self.image = self.images_left[self.index]

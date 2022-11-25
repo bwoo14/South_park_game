@@ -7,7 +7,7 @@ class Projectile(pygame.sprite.Sprite):
         takes a Character Object
         """
         self.character= character
-        self.projectile_img = pygame.image.load(f'images/{character.character_name}-projectile.png')
+        self.projectile_img = pygame.image.load(f'images/{character.character_name}/{character.character_name}-projectile.png')
         self.rect = self.projectile_img.get_rect()
         self.y_vel = 0
         self.x_vel = 5

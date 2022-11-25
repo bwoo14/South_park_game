@@ -39,14 +39,7 @@ class GameScreen(BaseScreen):
                 move_pref = 'left'
 
             # 1 in a 100 chance of a boss shooting a projectile
-            shoot_chance = random.randint(1, 100)
-            if shoot_chance == 1:
-                # Get the boss' projectile
-                projectile = self.bosses[self.level].get_projectile()
-                # Draw it on the screen
-                projectile.draw(self.window)
-                # add it to the projectile list
-                self.projectiles.append(projectile)
+            self.boss_shoot()
 
             # Draw each projectile in the projectile list
             for projectile in self.projectiles:
@@ -66,12 +59,11 @@ class GameScreen(BaseScreen):
                 elif projectile.get_position()[0] < 0 or projectile.get_position()[0] > SCREEN_WIDTH:
                     self.projectiles.remove(projectile)
 
-            score = self.font.render("Score:"+str(self.score), True, 'black', None)
-            self.window.blit(score, (0,0))
+            # Add score and health to screen
+            self.add_text(self.score, 'Score: ', (0, 0))
+            self.add_text(self.character.health, "Health: ", "top-right")
 
-            health = self.font.render("Health:"+str(self.character.health), True, 'black', None)
-            self.window.blit(health, (SCREEN_WIDTH - health.get_width(), 0))
-
+            # Check if character is touching ground
             character_ground = self.ground_collision(self.character)
             boss_ground = self.ground_collision(self.bosses[self.level])
 
@@ -79,9 +71,8 @@ class GameScreen(BaseScreen):
             self.character.update(self.window, character_ground)
             self.bosses[self.level].update(self.window, boss_ground, move_pref)
 
-            # Did the character die xd
+            # Did the character die
             if self.character.health <= 0:
-                pygame.draw.line(self.window, 'black', (0, 0), (SCREEN_WIDTH, SCREEN_HEIGHT))
                 self.game_over = True
         else:
             # TEMPORARY
@@ -103,7 +94,6 @@ class GameScreen(BaseScreen):
             file_data.append(score)
             file.seek(0)
             json.dump(file_data, file, indent = 4)
-        print(1)
         self.recorded = True
         self.next_screen = 'charselect'
 
@@ -123,4 +113,26 @@ class GameScreen(BaseScreen):
             mouse_pos = pygame.mouse.get_pos() # get the mouse pos 
             projectile = self.character.get_projectile(self.character)
             self.projectiles.append(projectile)
-                
+
+    def add_text(self, text, label, position):
+        """
+        adds text to the screen
+        """
+        img_text = self.font.render(f"{label}"+str(text), True, 'black', None)
+        if position == 'top-right':
+            position = (SCREEN_WIDTH - img_text.get_width(), 0)
+
+        self.window.blit(img_text, position)
+
+    def boss_shoot(self):
+        """
+        1 in 100 chance of boss shooting a projectile
+        """
+        shoot_chance = random.randint(1, 100)
+        if shoot_chance == 1:
+            # Get the boss' projectile
+            projectile = self.bosses[self.level].get_projectile()
+            # Draw it on the screen
+            projectile.draw(self.window)
+            # add it to the projectile list
+            self.projectiles.append(projectile)

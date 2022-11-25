@@ -23,15 +23,7 @@ class Boss(Character):
         jump = random.randint(1,20)
         dx = self.move_boss(move, ground_collision, jump)
 
-        if self.counter > self.walk_cooldown:
-            self.counter = 0
-            self.index += 1
-            if self.index >= len(self.images_right):
-                self.index = 0
-            if self.direction == 1:
-                self.image = self.images_right[self.index]
-            if self.direction == -1:
-                self.image = self.images_left[self.index]
+        self.animate()
         # add gravity
 
         self.vel_y += 2
