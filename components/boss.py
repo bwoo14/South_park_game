@@ -23,9 +23,9 @@ class Boss(Character):
         jump = random.randint(1,20)
         dx = self.move_boss(move, ground_collision, jump)
 
+        # Animate on move
         self.animate()
         # add gravity
-
         self.vel_y += 2
 
         dy += self.vel_y
@@ -36,20 +36,10 @@ class Boss(Character):
         # Update boss coordinates
         self.rect.x += dx
         self.rect.y += dy
-        # Don't let boss go below screen
-        if self.rect.bottom > SCREEN_HEIGHT:
-            self.rect.bottom = SCREEN_HEIGHT
-            dy = 0
-        # Don't let boss to left of screen
-        if self.rect.left < 0:
-            self.rect.left = 0
+        
+        # Don't let boss go off screen
+        self.is_off_screen()
 
-        # Don't let boss to right of screen
-        if self.rect.right > SCREEN_WIDTH:
-            self.rect.right = SCREEN_WIDTH
-        # Don't let boss go above screen
-        if self.rect.top < 0:
-            self.rect.top = 0
         screen.blit(self.image, self.rect)
     
     def move_boss(self, move, ground_collision, jump):

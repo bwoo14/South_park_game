@@ -37,11 +37,7 @@ class PlayerCharacter(Character):
             if self.direction == -1:
                 self.image = self.images_left[self.index]
         
-        
-        # self.shoot(screen)
-
-        # Handle animation
-        
+        # Handle animation on move
         self.animate()
 
         # add gravity
@@ -58,24 +54,10 @@ class PlayerCharacter(Character):
         self.rect.x += dx
         self.rect.y += dy
 
+        # Checks to see if player is offscreen
         self.is_off_screen()
 
         screen.blit(self.image, self.rect)
 
-    def is_off_screen(self):
-        # Don't let player go below screen
-        if self.rect.bottom > SCREEN_HEIGHT:
-            self.rect.bottom = SCREEN_HEIGHT
-            dy = 0
-        # Don't let player to left of screen
-        if self.rect.left < 0:
-            self.rect.left = 0
-        
-        # Don't let player to right of screen
-        if self.rect.right > SCREEN_WIDTH:
-            self.rect.right = SCREEN_WIDTH
-
-        # Don't let player go above screen
-        if self.rect.top < 0:
-            self.rect.top = 0
+    
 

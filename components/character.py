@@ -62,8 +62,8 @@ class Character(pygame.sprite.Sprite):
     def get_position(self):
         return (self.rect.x, self.rect.y)
 
-    def get_projectile(self, character=None):
-        return Projectile(self)
+    def get_projectile(self, x, y, dirx, diry):
+        return Projectile(x, y, dirx, diry, self)
     
     def animate(self):
         if self.counter > self.walk_cooldown:
@@ -75,3 +75,22 @@ class Character(pygame.sprite.Sprite):
                 self.image = self.images_right[self.index]
             if self.direction == -1:
                 self.image = self.images_left[self.index]
+    def is_off_screen(self):
+        """
+        if the player is off screen, send them back to previous position
+        """
+        # Don't let player go below screen
+        if self.rect.bottom > SCREEN_HEIGHT:
+            self.rect.bottom = SCREEN_HEIGHT
+            dy = 0
+        # Don't let player to left of screen
+        if self.rect.left < 0:
+            self.rect.left = 0
+        
+        # Don't let player to right of screen
+        if self.rect.right > SCREEN_WIDTH:
+            self.rect.right = SCREEN_WIDTH
+
+        # Don't let player go above screen
+        if self.rect.top < 0:
+            self.rect.top = 0

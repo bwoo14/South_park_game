@@ -5,6 +5,7 @@ from components import Character, PlayerCharacter, Boss, InputBox
 import random
 import json
 import string
+import math
 
 class GameScreen(BaseScreen):
     """ The game screen for the game """
@@ -56,7 +57,7 @@ class GameScreen(BaseScreen):
                 # If boss projectile hits the player, take damage
 
                 # If projectile goes off the screen, remove it from the projectile list
-                elif projectile.get_position()[0] < 0 or projectile.get_position()[0] > SCREEN_WIDTH:
+                if projectile.get_position()[0] < 0 or projectile.get_position()[0] > SCREEN_WIDTH:
                     self.projectiles.remove(projectile)
 
             # Add score and health to screen
@@ -89,6 +90,9 @@ class GameScreen(BaseScreen):
 
             
     def record_score(self, score):
+        """
+        records the score to a JSON file
+        """
         with open('scores/scores.json','r+') as file:
             file_data = json.load(file)
             file_data.append(score)
@@ -110,8 +114,14 @@ class GameScreen(BaseScreen):
         """
         # If mouse click inside start button, start game
         if event.type == pygame.MOUSEBUTTONDOWN:
-            mouse_pos = pygame.mouse.get_pos() # get the mouse pos 
-            projectile = self.character.get_projectile(self.character)
+            end_x, end_y = pygame.mouse.get_pos() # get the mouse pos 
+            start_x = self.character.get_position()[0]
+            start_y = self.character.get_position()[1]
+            dir_x = end_x - start_x
+            dir_y = end_y - start_y
+
+            distance = math.sqrt(dir_x**2 + dir_y**2)
+            projectile = self.character.get_projectile(start_x, start_y, dir_x/distance, dir_y/distance )
             self.projectiles.append(projectile)
 
     def add_text(self, text, label, position):
@@ -130,9 +140,16 @@ class GameScreen(BaseScreen):
         """
         shoot_chance = random.randint(1, 100)
         if shoot_chance == 1:
+            start_x = self.bosses[self.level].get_position()[0]
+            start_y = self.bosses[self.level].get_position()[1]
+            dir_x = self.character.get_position()[0] - start_x
+            dir_y = self.character.get_position()[1] - start_y
+
+            distance = math.sqrt(dir_x**2 + dir_y**2)
             # Get the boss' projectile
-            projectile = self.bosses[self.level].get_projectile()
-            # Draw it on the screen
-            projectile.draw(self.window)
-            # add it to the projectile list
-            self.projectiles.append(projectile)
+            if distance > 0:
+                projectile = self.bosses[self.level].get_projectile(start_x, start_y, dir_x/distance, dir_y/distance)
+                # Draw it on the screen
+                projectile.draw(self.window)
+                # add it to the projectile list
+                self.projectiles.append(projectile)
