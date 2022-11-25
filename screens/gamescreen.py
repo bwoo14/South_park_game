@@ -29,6 +29,9 @@ class GameScreen(BaseScreen):
         self.font = pygame.font.Font('C:\WINDOWS\Fonts\ARIALN.TTF', 20)
         self.recorded = False
        
+        self.clock = pygame.time.Clock()
+        self.time = 0
+
 
         #self.play_again = pygame.image.load('images/play-again.png')
        # self.play_again_rect = self.play_again.get_rect(center=self.game_over_img_rect.bottom)
@@ -39,9 +42,12 @@ class GameScreen(BaseScreen):
         """
         Draw the background image and the character, also handles any collisions
         """
+
         if self.game_over == False:
             self.window.blit(self.bg_img, (0, 0))
 
+            self.time += self.clock.tick(60)
+            
 
             # If character is to the right of the boss, move boss to the right, same with left
             if self.character.get_position()[0] > self.bosses[self.level].get_position()[0]:
@@ -71,9 +77,10 @@ class GameScreen(BaseScreen):
                 if projectile.get_position()[0] < 0 or projectile.get_position()[0] > SCREEN_WIDTH:
                     self.projectiles.remove(projectile)
 
-            # Add score and health to screen
+            # Add score, time, health to screen
             self.add_text(self.score, 'Score: ', (0, 0))
             self.add_text(self.character.health, "Health: ", "top-right")
+            self.add_text(round(self.time / 1000), "Time: ", "bottom-left")
 
             # Check if character is touching ground
             character_ground = self.ground_collision(self.character)
@@ -100,27 +107,8 @@ class GameScreen(BaseScreen):
     def call_game_over(self):
         #self.window.blit(self.game_over_img, self.game_over_img_rect)
         #self.window.blit(self.play_again, self.play_again_rect)
-        self.final_score = self.score
+        self.final_score = self.score / round(self.time / 1000)
         self.next_screen = 'gameover'
-            
-    # def record_score(self, score):
-    #     """
-    #     sends a post request to the server with the score json file
-    #     """
-    #     # UNCOMMENT THIS BLOCK TO WRITE TO THE JSON FILE LOCALLY
-    #     # with open('scores/scores.json','r+') as file:
-    #     #     file_data = json.load(file)
-    #     #     file_data.append(score)
-    #     #     file.seek(0)
-    #     #     json.dump(file_data, file, indent = 4)
-    #     url = 'http://127.0.0.1:5000/submitscore'
-    #     try:
-    #         x = requests.post(url, json = score)
-    #         print(x.text)
-    #     except:
-    #         print('Server is Down')
-        
-    #     self.recorded = True
         
     def ground_collision(self, character):
         """
@@ -153,6 +141,9 @@ class GameScreen(BaseScreen):
         img_text = self.font.render(f"{label}"+str(text), True, 'black', None)
         if position == 'top-right':
             position = (SCREEN_WIDTH - img_text.get_width(), 0)
+        elif position == 'bottom-left':
+            position = (0, SCREEN_HEIGHT - img_text.get_height())
+            img_text = self.font.render(f"{label}"+str(text)+ " seconds", True, 'white', None)
 
         self.window.blit(img_text, position)
 

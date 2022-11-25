@@ -16,9 +16,10 @@ class InputBox(pygame.sprite.Sprite):
         self.rect.y = y
         self.active = False
         self.entered = ''
+        self.submitted = False
 
     def handle_event(self, event):
-        if event.type == pygame.MOUSEBUTTONDOWN:
+        if event.type == pygame.MOUSEBUTTONDOWN and not self.submitted:
             # If the user clicked on the input_box rect.
             if self.rect.collidepoint(event.pos):
                 # Toggle the active variable.
@@ -27,18 +28,22 @@ class InputBox(pygame.sprite.Sprite):
                 self.active = False
             # Change the current color of the input box.
             self.color = COLOR_ACTIVE if self.active else COLOR_INACTIVE
-        if event.type == pygame.KEYDOWN:
+            
+        if event.type == pygame.KEYDOWN and not self.submitted:
             if self.active:
                 if event.key == pygame.K_RETURN:
                     # print(self.text)
                     self.entered = self.text
-                    self.text = ''
+                    self.text = 'Submitted!'
+                    self.submitted = True
+                    
                 elif event.key == pygame.K_BACKSPACE:
                     self.text = self.text[:-1]
                 else:
                     self.text += event.unicode
                 # Re-render the text.
                 self.txt_surface = self.font.render(self.text, True, 'white')
+                
     def update(self):
         # Resize the box if the text is too long.
         width = max(200, self.txt_surface.get_width()+10)

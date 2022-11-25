@@ -11,7 +11,7 @@
     function sortTable(n) {
       console.log(1)
       var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
-      table = document.getElementById("myTable2");
+      table = document.getElementById("score-table");
       switching = true;
       // Set the sorting direction to ascending:
       dir = "asc";
@@ -63,10 +63,16 @@
         }
       }
     }
+    let first_load = true
+    if (first_load) {
+        sortTable(1)
+        first_load = false
+    }
+    
     </script>
 <body>
     <h1>South Park Game Scores:</h1>
-    <table class="table">
+    <table id="score-table" class="table">
         <thead class="thead-dark">
             <th onclick="sortTable(0)">Username</th>
             <th onclick="sortTable(1)">Score</th>

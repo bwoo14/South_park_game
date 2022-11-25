@@ -2,7 +2,7 @@ from screens import BaseScreen
 import pygame
 from global_variables import *
 import webbrowser
-from components.input_box import InputBox
+from components import InputBox
 import random
 import string
 import requests
@@ -14,9 +14,10 @@ class GameOver(BaseScreen):
          self.bg_img = pygame.transform.scale(bg_img, (SCREEN_WIDTH, SCREEN_HEIGHT))
          self.game_over_img = pygame.image.load('images/game-over.png')
          self.game_over_img_rect = self.game_over_img.get_rect(center=(SCREEN_WIDTH/2, SCREEN_HEIGHT/2 - 50))
-         self.font  = pygame.font.SysFont('Arial', 20)
+         self.font = pygame.font.SysFont('Arial', 20)
          self.leaderboard = self.font.render("Leaderboard", True, 'blue')
          self.leaderboard_rect = self.leaderboard.get_rect(center=(SCREEN_WIDTH/2, self.game_over_img_rect.bottom))
+         
 
          self.play_again = self.font.render('Play Again', True, 'blue')
          self.play_again_rect = self.play_again.get_rect(center=(SCREEN_WIDTH/2, self.leaderboard_rect.bottom  + 10))
@@ -35,7 +36,9 @@ class GameOver(BaseScreen):
         self.window.blit(self.leaderboard, self.leaderboard_rect)
         self.window.blit(self.play_again, self.play_again_rect)
         
+        
         self.enter_username.draw(self.window)
+    
         self.enter_username.update()
         if self.enter_username.entered and not self.score_recorded:
             self.score_recorded = True
@@ -64,10 +67,6 @@ class GameOver(BaseScreen):
              print('Server is Down')
          
          self.recorded = True
-         
-
-
-
 
     def manage_event(self, event):
         """
