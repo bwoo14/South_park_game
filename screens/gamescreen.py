@@ -28,11 +28,13 @@ class GameScreen(BaseScreen):
         self.font = pygame.font.Font('C:\WINDOWS\Fonts\ARIALN.TTF', 20)
         self.recorded = False
         self.game_over_img = pygame.image.load('images/game-over.png')
-        self.game_over_img_rect = self.game_over_img.get_rect(center=(SCREEN_WIDTH/2, SCREEN_HEIGHT/2))
+        self.game_over_img_rect = self.game_over_img.get_rect(center=(SCREEN_WIDTH/2, SCREEN_HEIGHT/2 - 50))
 
         self.play_again = pygame.image.load('images/play-again.png')
-        play_again_x = self.game_over_img_rect.bottom - self.play_again.get_width()
-        self.play_again_rect = self.play_again.get_rect(center=(play_again_x, self.game_over_img_rect.bottom))
+        self.play_again_rect = self.play_again.get_rect(center=self.game_over_img_rect.bottom)
+        
+        self.exit = pygame.image.load('images/exit.png')
+        self.exit_rect = self.exit.get_rect(top=self.play_again_rect.bottom)
     def draw(self):
         """
         Draw the background image and the character, also handles any collisions
@@ -107,6 +109,9 @@ class GameScreen(BaseScreen):
     def game_over_overlay(self):
         self.window.blit(self.game_over_img, self.game_over_img_rect)
         self.window.blit(self.play_again, self.play_again_rect)
+
+        for event in pygame.event.get():
+            self.manage_event(event)
             
     def record_score(self, score):
         """
@@ -134,7 +139,11 @@ class GameScreen(BaseScreen):
         """
         handles the events (key strokes) that occur 
         """
-        # If mouse click inside start button, start game
+        if event.type == pygame.MOUSEBUTTONDOWN and self.game_over:
+            mouse_pos = pygame.mouse.get_pos() # get the mouse pos 
+            if self.play_again_rect.collidepoint(mouse_pos): #checking if the mouse_pos is inside the rectangle 
+                self.next_screen = 'charselect'
+
         if event.type == pygame.MOUSEBUTTONDOWN:
             end_x, end_y = pygame.mouse.get_pos() # get the mouse pos 
             start_x = self.character.get_position()[0]
@@ -146,6 +155,7 @@ class GameScreen(BaseScreen):
             projectile = self.character.get_projectile(start_x, start_y, dir_x/distance, dir_y/distance )
             self.projectiles.append(projectile)
 
+        
     def add_text(self, text, label, position):
         """
         adds text to the screen

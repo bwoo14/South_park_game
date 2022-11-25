@@ -39,16 +39,20 @@ class ChooseCharacterScreen(BaseScreen):
             mouse_pos = pygame.mouse.get_pos() # get the mouse pos 
             if self.cart_rect.collidepoint(mouse_pos): #checking if the mouse_pos is inside the rectangle 
                 self.chosen_character = 'cartman'
+                self.next_screen = 'game'
             elif self.stan_rect.collidepoint(mouse_pos):
                 self.chosen_character = 'stan'
+                self.next_screen = 'game'
             elif self.kyle_rect.collidepoint(mouse_pos):
                 self.chosen_character = 'kyle'
+                self.next_screen = 'game'
             elif self.kenny_rect.collidepoint(mouse_pos):
                 self.chosen_character = 'kenny'
+                self.next_screen = 'game'
             
             # !!! add kenny and kyle
                 
-            self.next_screen = 'game'
+            
 
     def load_image(self, image):
         char_size = 200
