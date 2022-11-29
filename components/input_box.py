@@ -32,7 +32,7 @@ class InputBox(pygame.sprite.Sprite):
         if event.type == pygame.KEYDOWN and not self.submitted:
             if self.active:
                 if event.key == pygame.K_RETURN:
-                    # print(self.text)
+
                     self.entered = self.text
                     self.text = 'Submitted!'
                     self.submitted = True

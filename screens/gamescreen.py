@@ -33,11 +33,6 @@ class GameScreen(BaseScreen):
         self.time = 0
 
 
-        #self.play_again = pygame.image.load('images/play-again.png')
-       # self.play_again_rect = self.play_again.get_rect(center=self.game_over_img_rect.bottom)
-        
-        #self.exit = pygame.image.load('images/exit.png')
-        #self.exit_rect = self.exit.get_rect(top=self.play_again_rect.bottom)
     def draw(self):
         """
         Draw the background image and the character, also handles any collisions

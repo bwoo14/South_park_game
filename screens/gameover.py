@@ -6,6 +6,8 @@ from components import InputBox
 import random
 import string
 import requests
+import json
+import datetime
 
 class GameOver(BaseScreen):
     def __init__(self, screen, final_score):
@@ -45,28 +47,29 @@ class GameOver(BaseScreen):
             self.upload_score()
 
     def upload_score(self):
+        date_time = datetime.datetime.now()
+        score = {
+            "score_id": ''.join(random.choices(string.ascii_uppercase + string.digits, k=20)),
+            "username": self.enter_username.entered,
+            "score": self.final_score,
+            "character": self.selected_character,
+            "date": date_time.strftime("%c")
+        }
+    
+        url = 'http://127.0.0.1:5000/submitscore'
+        try:
+            x = requests.post(url, json = score)
+            print(x.text)
+        except:
+           print('Server is Down')
+                
+           with open('local_scores/Local_score.json','r+') as file:
+               file_data = json.load(file)
+               file_data.append(score)
+               file.seek(0)
+               json.dump(file_data, file, indent = 4)
         
-         score = {
-             "score_id": ''.join(random.choices(string.ascii_uppercase + string.digits, k=20)),
-             "username": self.enter_username.entered,
-             "score": self.final_score,
-             "character": self.selected_character,
-             "date": "0"
-         }
-        # UNCOMMENT THIS BLOCK TO WRITE TO THE JSON FILE LOCALLY
-        # with open('scores/scores.json','r+') as file:
-        #     file_data = json.load(file)
-        #     file_data.append(score)
-        #     file.seek(0)
-        #     json.dump(file_data, file, indent = 4)
-         url = 'http://127.0.0.1:5000/submitscore'
-         try:
-             x = requests.post(url, json = score)
-             print(x.text)
-         except:
-             print('Server is Down')
-         
-         self.recorded = True
+        self.recorded = True
 
     def manage_event(self, event):
         """
