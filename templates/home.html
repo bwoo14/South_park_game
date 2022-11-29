@@ -89,12 +89,9 @@
         <tr>
             <td><a href={{ url_for('score_info', score_id = score.score_id) }}>{{ score.username }}</a></td>
             <td>{{ score.score }}</td>
-            {% if score.time == 'Lost' %}
-              <td>{{ score.time }}</td>
-            {% else %}
-              <td>{{ score.time }} seconds</td>
-            {% endif %}
-            <td><img class='char' src="/static/{{ score.character }}-front.png"></td>
+            <td>{{ score.time }}</td>
+            
+            <td><img class='char' src={{ url_for('static', filename='characters/' + score.character + '-front.png') }}></td>
             <td>{{ score.date }}</td>
         </tr>
         {% endfor %}

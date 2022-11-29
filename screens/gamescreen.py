@@ -103,10 +103,10 @@ class GameScreen(BaseScreen):
     def call_game_over(self):
         #self.window.blit(self.game_over_img, self.game_over_img_rect)
         #self.window.blit(self.play_again, self.play_again_rect)
-
+        rounded_time = round(self.time/ 1000)
         if self.won:
             # If you win the game, your score is multiplied by the duration of the game
-            self.final_score = {"score": self.score, "time": round(self.time/ 1000)}
+            self.final_score = {"score": self.score * rounded_time, "time": f'{rounded_time} seconds'}
         else:
             self.final_score = {"score": self.score, "time": 'Lost'}
 

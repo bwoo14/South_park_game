@@ -1,10 +1,12 @@
 
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, url_for
 from models.scorelist import ScoreList
+import os
+
 
 app = Flask(__name__)
 
-@app.route("/score_id", methods=['GET'])
+# @app.route("/score_id", methods=['GET'])
 @app.route("/")
 def home():
     scores = ScoreList()
@@ -15,8 +17,9 @@ def score_info(score_id):
     print(score_id)
     scores = ScoreList()
     score = scores.get_score(score_id)
-    print(score)
-    return render_template("view_score.html", score_data=score)
+    
+
+    return render_template("view_score.html", score=score)
 
 
 @app.route("/submitscore", methods=['POST'])

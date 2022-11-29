@@ -7,8 +7,25 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <title>South Park Scores</title>
 </head>
+<style>
+    .player-information {
+        display: flex;
+        gap: 5px;
+    }
+    .char {
+        border: 2px solid black;
+        border-radius: 25px;
+    }
+</style>
 <body>
     <h1>South Park Game Scores:</h1>
-    <p>{{ score_data.score_id }}</p>
+    <div class="player-information">
+        <img class='char' src={{ url_for('static', filename='characters/' + score.character + '-front.png') }}>
+        <div>
+            <b>Username:</b> {{ score.username }}<br>
+            <b>Score:</b> {{ score.score }}<br>
+            <b>Date:</b> {{ score.date }}
+        </div>
+    </div>
 </body>
 </html>
