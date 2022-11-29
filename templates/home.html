@@ -70,12 +70,18 @@
     }
     
     </script>
+    <style>
+      .char {
+        width: 25%
+      }
+    </style> 
 <body>
     <h1>South Park Game Scores:</h1>
     <table id="score-table" class="table">
         <thead class="thead-dark">
             <th onclick="sortTable(0)">Username</th>
             <th onclick="sortTable(1)">Score</th>
+            <th>Time</th>
             <th onclick="sortTable(2)">Character</th>
             <th onclick="sortTable(3)">Date</th>
         </thead>
@@ -83,7 +89,12 @@
         <tr>
             <td><a href={{ url_for('score_info', score_id = score.score_id) }}>{{ score.username }}</a></td>
             <td>{{ score.score }}</td>
-            <td>{{ score.character }}</td>
+            {% if score.time == 'Lost' %}
+              <td>{{ score.time }}</td>
+            {% else %}
+              <td>{{ score.time }} seconds</td>
+            {% endif %}
+            <td><img class='char' src="/static/{{ score.character }}-front.png"></td>
             <td>{{ score.date }}</td>
         </tr>
         {% endfor %}

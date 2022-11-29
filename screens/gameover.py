@@ -2,7 +2,7 @@ from screens import BaseScreen
 import pygame
 from global_variables import *
 import webbrowser
-from components import InputBox
+from components import InputBox, TextBox
 import random
 import string
 import requests
@@ -14,17 +14,27 @@ class GameOver(BaseScreen):
          super().__init__(screen)
          bg_img = pygame.image.load('images/background.jpg').convert()
          self.bg_img = pygame.transform.scale(bg_img, (SCREEN_WIDTH, SCREEN_HEIGHT))
-         self.game_over_img = pygame.image.load('images/game-over.png')
+         if final_score['time'] != 'Lost':
+            self.game_over_img = pygame.image.load('images/you_win.png')
+         else:
+            self.game_over_img = pygame.image.load('images/game-over.png')
+
+         
          self.game_over_img_rect = self.game_over_img.get_rect(center=(SCREEN_WIDTH/2, SCREEN_HEIGHT/2 - 50))
          self.font = pygame.font.SysFont('Arial', 20)
-         self.leaderboard = self.font.render("Leaderboard", True, 'blue')
-         self.leaderboard_rect = self.leaderboard.get_rect(center=(SCREEN_WIDTH/2, self.game_over_img_rect.bottom))
          
+         # Text boxes
 
-         self.play_again = self.font.render('Play Again', True, 'blue')
-         self.play_again_rect = self.play_again.get_rect(center=(SCREEN_WIDTH/2, self.leaderboard_rect.bottom  + 10))
+         # leaderboard textbox
+         self.leaderboard = TextBox(SCREEN_WIDTH/2, self.game_over_img_rect.bottom, 'Leaderboard', 20, 'blue', True)
+         # Play again button
+         self.play_again = TextBox(SCREEN_WIDTH/2, self.leaderboard.rect.bottom + 10, 'Play Again', 20, 'blue', center=True)
+         # Final score textbox
+         self.present_score = TextBox(SCREEN_WIDTH/2, self.game_over_img_rect.top, 'Final Score: ' + str(final_score['score']), 50, 'black', center=True)
+         # Final time textbox
+         self.present_time = TextBox(SCREEN_WIDTH/2, self.present_score.rect.bottom + 10, 'Final Time: ' + str(final_score['time']), 50, 'black', center=True)
 
-         self.enter_username = InputBox(SCREEN_WIDTH/2 - 100, self.play_again_rect.bottom + 10)
+         self.enter_username = InputBox(SCREEN_WIDTH/2 - 100, self.play_again.rect.bottom + 10)
          self.final_score = final_score
 
          self.score_recorded = False
@@ -34,9 +44,16 @@ class GameOver(BaseScreen):
         Draw the background image, play again button, and view leaderboard
         """
         self.window.blit(self.bg_img, (0, 0))
+
+
         self.window.blit(self.game_over_img , self.game_over_img_rect)
-        self.window.blit(self.leaderboard, self.leaderboard_rect)
-        self.window.blit(self.play_again, self.play_again_rect)
+
+
+        self.present_score.draw(self.window)
+        if self.final_score['time'] != 'lost':
+            self.present_time.draw(self.window)
+        self.leaderboard.draw(self.window)
+        self.play_again.draw(self.window)
         
         
         self.enter_username.draw(self.window)
@@ -51,9 +68,10 @@ class GameOver(BaseScreen):
         score = {
             "score_id": ''.join(random.choices(string.ascii_uppercase + string.digits, k=20)),
             "username": self.enter_username.entered,
-            "score": self.final_score,
+            "score": self.final_score['score'],
+            "time": self.final_score['time'],
             "character": self.selected_character,
-            "date": date_time.strftime("%c")
+            "date": date_time.strftime("%c") 
         }
     
         url = 'http://127.0.0.1:5000/submitscore'
@@ -78,10 +96,10 @@ class GameOver(BaseScreen):
         if event.type == pygame.MOUSEBUTTONDOWN:
             pos = event.pos
 
-            if self.leaderboard_rect.collidepoint(pos):
+            if self.leaderboard.rect.collidepoint(pos):
                 webbrowser.open(r"http://127.0.0.1:5000/")
 
-            elif self.play_again_rect.collidepoint(pos):
+            elif self.play_again.rect.collidepoint(pos):
                 self.next_screen = 'charselect'
         
         self.enter_username.handle_event(event)

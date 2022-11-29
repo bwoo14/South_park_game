@@ -3,10 +3,8 @@ from screens.basescreen import BaseScreen
 from global_variables import *
 from components import Character, PlayerCharacter, Boss, InputBox
 import random
-import json
-import string
 import math
-import requests
+
 
 class GameScreen(BaseScreen):
     """ The game screen for the game """
@@ -17,9 +15,9 @@ class GameScreen(BaseScreen):
         self.img_width = self.bg_img.get_width()
         self.character = PlayerCharacter(selected_character, 480, 270, health=10)
         self.bosses = [ 
-                        Boss('kylesmom', 0, 100, health=500),
-                        Boss('snooki', 0, 100, health=500),
-                        Boss('satan', 0, 100, health = 500),
+                        Boss('kylesmom', 0, 100, health=10),
+                        Boss('snooki', 0, 100, health=10),
+                        Boss('satan', 0, 100, health = 10),
         ]
         self.projectiles = []
         self.level = 0
@@ -31,6 +29,8 @@ class GameScreen(BaseScreen):
        
         self.clock = pygame.time.Clock()
         self.time = 0
+
+        self.won = False
 
 
     def draw(self):
@@ -90,6 +90,7 @@ class GameScreen(BaseScreen):
                 self.level += 1
                 if self.level >= len(self.bosses):
                     self.game_over = True
+                    self.won = True
             # Did the character die
             if self.character.health <= 0:
                 self.game_over = True
@@ -102,7 +103,13 @@ class GameScreen(BaseScreen):
     def call_game_over(self):
         #self.window.blit(self.game_over_img, self.game_over_img_rect)
         #self.window.blit(self.play_again, self.play_again_rect)
-        self.final_score = self.score / round(self.time / 1000)
+
+        if self.won:
+            # If you win the game, your score is multiplied by the duration of the game
+            self.final_score = {"score": self.score, "time": round(self.time/ 1000)}
+        else:
+            self.final_score = {"score": self.score, "time": 'Lost'}
+
         self.next_screen = 'gameover'
         
     def ground_collision(self, character):

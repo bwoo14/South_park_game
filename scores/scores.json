@@ -3,7 +3,72 @@
         "score_id": "YYGJZA12Z41R9WOLGSLA",
         "username": "jimmy",
         "score": 45.0,
+        "time": "5",
         "character": "stan",
         "date": "Mon Nov 28 19:09:18 2022"
+    },
+    {
+        "score_id": "UX6XPS6VG8CC5NGHKO0G",
+        "username": "johnny",
+        "score": -1.6666666666666667,
+        "time": "100",
+        "character": "kyle",
+        "date": "Mon Nov 28 20:56:39 2022"
+    },
+    {
+        "score_id": "94GR7RRYNK8MFJ18R4QN",
+        "username": "ken",
+        "score": 21.25,
+        "time": "100",
+        "character": "kenny",
+        "date": "Mon Nov 28 21:00:31 2022"
+    },
+    {
+        "score_id": "9CK21UR07Q523C9DQ5EH",
+        "username": "jimmy",
+        "score": 95,
+        "time": "Lost",
+        "character": "stan",
+        "date": "Mon Nov 28 21:22:49 2022"
+    },
+    {
+        "score_id": "JWYE8OCJ678MXPYYMBCA",
+        "username": "Johnny",
+        "score": 105,
+        "time": "Lost",
+        "character": "cartman",
+        "date": "Mon Nov 28 21:59:22 2022"
+    },
+    {
+        "score_id": "JG7JVI9FER9OG6AWAPJQ",
+        "username": "jimmy",
+        "score": 30,
+        "time": 5417,
+        "character": "kyle",
+        "date": "Mon Nov 28 22:01:33 2022"
+    },
+    {
+        "score_id": "KQA1PRRBLIVXB5W4YRHK",
+        "username": "i suck",
+        "score": -5,
+        "time": "Lost",
+        "character": "kyle",
+        "date": "Mon Nov 28 22:02:32 2022"
+    },
+    {
+        "score_id": "5PZTS5ZKOQM73OULL0EM",
+        "username": "penis breath",
+        "score": 30,
+        "time": 2,
+        "character": "stan",
+        "date": "Mon Nov 28 23:29:08 2022"
+    },
+    {
+        "score_id": "QYEB1OZYMPGKI3PC3HRD",
+        "username": "peepee poopoo",
+        "score": 30,
+        "time": 2,
+        "character": "cartman",
+        "date": "Mon Nov 28 23:29:33 2022"
     }
 ]
