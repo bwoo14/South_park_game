@@ -74,7 +74,8 @@ class GameOver(BaseScreen):
             "date": date_time.strftime("%c") 
         }
     
-        url = 'http://127.0.0.1:5000/submitscore'
+        # url = 'http://127.0.0.1:5000/submitscore'
+        url = 'http://143.198.226.171:5000/submitscore' # Digital Ocean Server
         try:
             x = requests.post(url, json = score)
             print(x.text)
@@ -97,7 +98,8 @@ class GameOver(BaseScreen):
             pos = event.pos
 
             if self.leaderboard.rect.collidepoint(pos):
-                webbrowser.open(r"http://127.0.0.1:5000/")
+                # webbrowser.open(r"http://127.0.0.1:5000/") # Uncomment for local server
+                webbrowser.open(r"http://143.198.226.171:5000/")
 
             elif self.play_again.rect.collidepoint(pos):
                 self.next_screen = 'charselect'
