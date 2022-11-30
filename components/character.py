@@ -8,7 +8,7 @@ import pygame
 CARTMAN = (100, 100)
 
 class Character(pygame.sprite.Sprite):
-    def __init__(self, character, x, y, health = 100):
+    def __init__(self, character, x, y, health = 100, speed=5):
         self.character_name = character
         self.images_right = []
         self.images_left = []
@@ -16,6 +16,7 @@ class Character(pygame.sprite.Sprite):
         self.counter = 0 # Handles the animation (each frame)
         self.walk_cooldown = 7 # Determines speed of animation
         self.health = health
+        self.speed = speed
         
         # if character is not of the player character type, return false
         if character in ['cartman', 'stan', 'kyle', 'kenny']:

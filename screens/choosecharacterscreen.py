@@ -15,7 +15,6 @@ class ChooseCharacterScreen(BaseScreen):
         self.stan_image = self.load_image('images/stan/stan-front.png')
         self.stan_rect = self.stan_image.get_rect(center=(SCREEN_WIDTH/2 - 100, SCREEN_HEIGHT/2))
 
-        
         self.kyle_image = self.load_image('images/kyle/kyle-front.png')
         self.kyle_rect = self.kyle_image.get_rect(center=(SCREEN_WIDTH/2 + 100, SCREEN_HEIGHT/2))
 
@@ -50,10 +49,7 @@ class ChooseCharacterScreen(BaseScreen):
                 self.chosen_character = 'kenny'
                 self.next_screen = 'game'
             
-            # !!! add kenny and kyle
                 
-            
-
     def load_image(self, image):
         char_size = 200
         loaded_image = pygame.image.load(image)

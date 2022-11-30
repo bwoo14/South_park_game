@@ -47,10 +47,10 @@ class Boss(Character):
         if jump == 1 and ground_collision:
             self.vel_y = -15
         if move == 'left':
-            dx -= 2
+            dx -= self.speed
             self.counter += 1
         elif move == 'right':
-            dx += 2
+            dx += self.speed
             self.counter += 1
         return dx
         

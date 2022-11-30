@@ -21,11 +21,11 @@ class PlayerCharacter(Character):
         if key[pygame.K_SPACE] == False:
             self.jumped = False
         if key[pygame.K_a]:
-            dx -= 5
+            dx -= self.speed
             self.counter += 1
             self.direction = -1
         if key[pygame.K_d]:
-            dx += 5
+            dx += self.speed
             self.counter += 1
             self.direction = 1
         if key[pygame.K_a] == False and key[pygame.K_d] == False:

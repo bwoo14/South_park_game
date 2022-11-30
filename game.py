@@ -9,16 +9,6 @@ import math
 from screens import GameScreen, MainMenu, ChooseCharacterScreen, GameOver
 pygame.init()
 
-
-###
-# TODO:
-#
-# Add time multiplier to score
-#
-#
-###
-
-
 class Game:
     """
     The game class that will run the entire game
@@ -50,6 +40,7 @@ class Game:
             # Check to see if the next screen is the game screen, if it is: send the selected character
             if screen_class == GameScreen:
                 screen = screen_class(self.window, selected_character)
+            # If next screen is game over, pass the final_score and the character selected
             elif screen_class == GameOver:
                 screen = screen_class(self.window, final_score)
                 screen.selected_character = selected_character
@@ -57,17 +48,20 @@ class Game:
                 screen = screen_class(self.window)
             screen.run()
 
+            # after screen.run() check if a character was selected
             if screen.chosen_character is not None:
+                # if it is, assign it to a variable to pass to the gamescreen
                 selected_character = screen.chosen_character
-
+            
+            # check if a final score was created
             if screen.final_score is not None:
+                # if it is, assign it to a variable to pass to the gameover screen
                 final_score = screen.final_score
             
 
             if screen.next_screen is False:
                 run = False
             current_screen = screen.next_screen
-            
             
         pygame.quit()
 

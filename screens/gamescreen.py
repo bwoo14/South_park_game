@@ -15,12 +15,13 @@ class GameScreen(BaseScreen):
         self.img_width = self.bg_img.get_width()
         self.character = PlayerCharacter(selected_character, 480, 270, health=100)
         self.bosses = [ 
-                        Boss('kylesmom', 0, 100, health=500),
-                        Boss('snooki', 0, 100, health=500),
-                        Boss('satan', 0, 100, health =500),
+                        Boss('kylesmom', 0, 100, health=500, speed=3),
+                        Boss('snooki', 0, 100, health=250, speed=4),
+                        Boss('satan', 0, 100, health=1000, speed=2),
         ]
-        # self.projectiles = []
+        
         self.projectiles = pygame.sprite.Group()
+        
         self.level = 0
         floor_height = 600
         self.road = pygame.Rect(0, floor_height, SCREEN_WIDTH, 100)
@@ -30,15 +31,16 @@ class GameScreen(BaseScreen):
        
         self.clock = pygame.time.Clock()
         self.time = 0
-
         self.won = False
+
+        self.last_attack = -1000
 
 
     def draw(self):
         """
         Draw the background image and the character, also handles any collisions
         """
-        
+        # If the game is still being played, continue playing
         if self.game_over == False:
             self.window.blit(self.bg_img, (0, 0))
 
@@ -84,13 +86,14 @@ class GameScreen(BaseScreen):
             character_ground = self.ground_collision(self.character)
             boss_ground = self.ground_collision(self.bosses[self.level])
 
-
+            # Update each character's position
             self.character.update(self.window, character_ground)
             self.bosses[self.level].update(self.window, boss_ground, move_pref)
 
-
+            # If the bosses health reaches 0, move onto the next boss
             if self.bosses[self.level].health == 0:
                 self.level += 1
+                # If there are no more bosses, win the game
                 if self.level >= len(self.bosses):
                     self.game_over = True
                     self.won = True
@@ -98,10 +101,7 @@ class GameScreen(BaseScreen):
             if self.character.health <= 0:
                 self.game_over = True
         else:
-            # TEMPORARY
-            
             self.call_game_over()
-            # self.next_screen = 'charselect'
             
     def call_game_over(self):
         rounded_time = round(self.time/ 1000)
@@ -117,15 +117,16 @@ class GameScreen(BaseScreen):
         """
         checks if the character is touching the ground
         """
-        if self.road.colliderect(character.rect):
-            return True
-       
-
+        return self.road.colliderect(character.rect)
+    
     def manage_event(self, event):
         """
         handles the events (key strokes) that occur 
         """
-        if event.type == pygame.MOUSEBUTTONDOWN:
+        # If player clicks, shoot a projectile
+        
+        if event.type == pygame.MOUSEBUTTONDOWN and self.time - self.last_attack >= 500:
+            self.last_attack = self.time
             end_x, end_y = pygame.mouse.get_pos() # get the mouse pos 
             start_x = self.character.get_position()[0]
             start_y = self.character.get_position()[1]
@@ -135,6 +136,7 @@ class GameScreen(BaseScreen):
             distance = math.sqrt(dir_x**2 + dir_y**2)
             projectile = self.character.get_projectile(start_x, start_y, dir_x/distance, dir_y/distance )
             self.projectiles.add(projectile)
+            
 
         
     def add_text(self, text, label, position):
@@ -146,16 +148,16 @@ class GameScreen(BaseScreen):
             position = (SCREEN_WIDTH - img_text.get_width(), 0)
         elif position == 'bottom-left':
             position = (0, SCREEN_HEIGHT - img_text.get_height())
-            img_text = self.font.render(f"{label}"+str(text)+ " seconds", True, 'black', None)
+            img_text = self.font.render(f"{label}"+str(text)+ " seconds", True, 'white', None)
         elif position == 'top-middle':
             position = (SCREEN_WIDTH/2, 0)
-            img_text = self.font.render(f"{label} {str(text)}", True, 'white', None)
+            img_text = self.font.render(f"{label} {str(text)}", True, 'black', None)
 
         self.window.blit(img_text, position)
 
     def boss_shoot(self):
         """
-        1 in 100 chance of boss shooting a projectile
+        1 in 100 chance of boss shooting a projectile, if shoot, calculate vector of the projectile and add it to the sprite group
         """
         shoot_chance = random.randint(1, 100)
         if shoot_chance == 1:
@@ -168,8 +170,4 @@ class GameScreen(BaseScreen):
             # Get the boss' projectile
             if distance > 0:
                 projectile = self.bosses[self.level].get_projectile(start_x, start_y, dir_x/distance, dir_y/distance, speed=10)
-                # Draw it on the screen
-                # projectile.draw(self.window)
-                # add it to the projectile list
                 self.projectiles.add(projectile)
-                # self.projectiles.append(projectile)

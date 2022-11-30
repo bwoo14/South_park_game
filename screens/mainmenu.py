@@ -12,9 +12,6 @@ class MainMenu(BaseScreen):
         logo = pygame.image.load('images/logo.png')
         self.logo = pygame.transform.scale(logo, (logo.get_width() * 1.5, logo.get_height() * 1.5))
         self.logo_rect = self.logo.get_rect(center=(SCREEN_WIDTH/2, 50))
-
-        self.font = pygame.font.SysFont('Arial',35)
-        self.text_color = (255,255,255)
         
         start_button = pygame.image.load('images/start_button.png')
         self.start_button = pygame.transform.scale(start_button, (200, 200))
