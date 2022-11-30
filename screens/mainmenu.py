@@ -20,6 +20,7 @@ class MainMenu(BaseScreen):
         self.start_button = pygame.transform.scale(start_button, (200, 200))
         self.start_button_rect = self.start_button.get_rect(center=(SCREEN_WIDTH/2, SCREEN_HEIGHT/2))
 
+
     def draw(self):
         """
         Draw the background image, logo, and start button
@@ -27,7 +28,6 @@ class MainMenu(BaseScreen):
         self.window.blit(self.menu_image, (0, 0))
         self.window.blit(self.logo, self.logo_rect)
         self.window.blit(self.start_button , self.start_button_rect)
-
 
     def manage_event(self, event):
         """

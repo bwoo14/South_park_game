@@ -6,6 +6,7 @@ class Projectile(pygame.sprite.Sprite):
         """
         takes a Character Object
         """
+        super().__init__()
         self.character= character
         self.projectile_img = pygame.image.load(f'images/{character.character_name}/{character.character_name}-projectile.png')
         self.rect = self.projectile_img.get_rect()
@@ -16,9 +17,6 @@ class Projectile(pygame.sprite.Sprite):
         self.diry = diry
         self.rect.x = x
         self.rect.y = y
-
-    def draw(self, screen):
-        screen.blit(self.projectile_img, self.rect)
 
     def update(self, screen):
         self.rect.x += self.speed * self.dirx

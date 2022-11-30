@@ -13,13 +13,14 @@ class GameScreen(BaseScreen):
         bg_img = pygame.image.load('images/background.jpg').convert()
         self.bg_img = pygame.transform.scale(bg_img, (SCREEN_WIDTH, SCREEN_HEIGHT))
         self.img_width = self.bg_img.get_width()
-        self.character = PlayerCharacter(selected_character, 480, 270, health=10)
+        self.character = PlayerCharacter(selected_character, 480, 270, health=100)
         self.bosses = [ 
-                        Boss('kylesmom', 0, 100, health=10),
-                        Boss('snooki', 0, 100, health=10),
-                        Boss('satan', 0, 100, health = 10),
+                        Boss('kylesmom', 0, 100, health=500),
+                        Boss('snooki', 0, 100, health=500),
+                        Boss('satan', 0, 100, health =500),
         ]
-        self.projectiles = []
+        # self.projectiles = []
+        self.projectiles = pygame.sprite.Group()
         self.level = 0
         floor_height = 600
         self.road = pygame.Rect(0, floor_height, SCREEN_WIDTH, 100)
@@ -37,7 +38,7 @@ class GameScreen(BaseScreen):
         """
         Draw the background image and the character, also handles any collisions
         """
-
+        
         if self.game_over == False:
             self.window.blit(self.bg_img, (0, 0))
 
@@ -54,7 +55,8 @@ class GameScreen(BaseScreen):
             self.boss_shoot()
 
             # Draw each projectile in the projectile list
-            for projectile in self.projectiles:
+            # for projectile in self.projectiles:
+            for projectile in self.projectiles.sprites():
                 projectile.update(self.window)
 
                 # Check if boss projectile hit player
@@ -75,6 +77,7 @@ class GameScreen(BaseScreen):
             # Add score, time, health to screen
             self.add_text(self.score, 'Score: ', (0, 0))
             self.add_text(self.character.health, "Health: ", "top-right")
+            self.add_text(self.bosses[self.level].health, "Boss Health: ", "top-middle")
             self.add_text(round(self.time / 1000), "Time: ", "bottom-left")
 
             # Check if character is touching ground
@@ -101,8 +104,6 @@ class GameScreen(BaseScreen):
             # self.next_screen = 'charselect'
             
     def call_game_over(self):
-        #self.window.blit(self.game_over_img, self.game_over_img_rect)
-        #self.window.blit(self.play_again, self.play_again_rect)
         rounded_time = round(self.time/ 1000)
         if self.won:
             # If you win the game, your score is multiplied by the duration of the game
@@ -133,7 +134,7 @@ class GameScreen(BaseScreen):
 
             distance = math.sqrt(dir_x**2 + dir_y**2)
             projectile = self.character.get_projectile(start_x, start_y, dir_x/distance, dir_y/distance )
-            self.projectiles.append(projectile)
+            self.projectiles.add(projectile)
 
         
     def add_text(self, text, label, position):
@@ -145,7 +146,10 @@ class GameScreen(BaseScreen):
             position = (SCREEN_WIDTH - img_text.get_width(), 0)
         elif position == 'bottom-left':
             position = (0, SCREEN_HEIGHT - img_text.get_height())
-            img_text = self.font.render(f"{label}"+str(text)+ " seconds", True, 'white', None)
+            img_text = self.font.render(f"{label}"+str(text)+ " seconds", True, 'black', None)
+        elif position == 'top-middle':
+            position = (SCREEN_WIDTH/2, 0)
+            img_text = self.font.render(f"{label} {str(text)}", True, 'white', None)
 
         self.window.blit(img_text, position)
 
@@ -165,6 +169,7 @@ class GameScreen(BaseScreen):
             if distance > 0:
                 projectile = self.bosses[self.level].get_projectile(start_x, start_y, dir_x/distance, dir_y/distance, speed=10)
                 # Draw it on the screen
-                projectile.draw(self.window)
+                # projectile.draw(self.window)
                 # add it to the projectile list
-                self.projectiles.append(projectile)
+                self.projectiles.add(projectile)
+                # self.projectiles.append(projectile)
