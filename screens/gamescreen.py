@@ -1,7 +1,7 @@
 import pygame
 from screens.basescreen import BaseScreen
 from global_variables import *
-from components import Character, PlayerCharacter, Boss, InputBox
+from components import PlayerCharacter, Boss
 import random
 import math
 
@@ -15,9 +15,9 @@ class GameScreen(BaseScreen):
         self.img_width = self.bg_img.get_width()
         self.character = PlayerCharacter(selected_character, 480, 270, health=100)
         self.bosses = [ 
-                        Boss('kylesmom', 0, 100, health=500, speed=3),
-                        Boss('snooki', 0, 100, health=250, speed=4),
-                        Boss('satan', 0, 100, health=1000, speed=2),
+                        Boss('kylesmom', 0, 100, health=150, speed=3),
+                        Boss('snooki', 0, 100, health=100, speed=4),
+                        Boss('satan', 0, 100, health=200, speed=2),
         ]
         
         self.projectiles = pygame.sprite.Group()
@@ -66,11 +66,12 @@ class GameScreen(BaseScreen):
                     self.projectiles.remove(projectile)
                     self.character.health -= 10
                     self.score -= 5
+                # Check if player projectile hit boss
                 elif isinstance(projectile.character, PlayerCharacter) and projectile.rect.colliderect(self.bosses[self.level]):
                     self.projectiles.remove(projectile)
                     self.score += 10
                     self.bosses[self.level].health -= 10
-                # If boss projectile hits the player, take damage
+                    #  If boss projectile hits the player, take damage
 
                 # If projectile goes off the screen, remove it from the projectile list
                 if projectile.get_position()[0] < 0 or projectile.get_position()[0] > SCREEN_WIDTH:
@@ -101,9 +102,12 @@ class GameScreen(BaseScreen):
             if self.character.health <= 0:
                 self.game_over = True
         else:
-            self.call_game_over()
+            self.call_game_over() # End game and go to game over screen
             
     def call_game_over(self):
+        '''
+        create the final score object, and set next screen to game_over
+        '''
         rounded_time = round(self.time/ 1000)
         if self.won:
             # If you win the game, your score is multiplied by the duration of the game
@@ -123,7 +127,7 @@ class GameScreen(BaseScreen):
         """
         handles the events (key strokes) that occur 
         """
-        # If player clicks, shoot a projectile
+        # If player clicks and 0.5s has passed since last attack, shoot a projectile
         
         if event.type == pygame.MOUSEBUTTONDOWN and self.time - self.last_attack >= 500:
             self.last_attack = self.time
@@ -161,6 +165,8 @@ class GameScreen(BaseScreen):
         """
         shoot_chance = random.randint(1, 100)
         if shoot_chance == 1:
+
+            # Calculating the direction vector of the projectile
             start_x = self.bosses[self.level].get_position()[0]
             start_y = self.bosses[self.level].get_position()[1]
             dir_x = self.character.get_position()[0] - start_x
