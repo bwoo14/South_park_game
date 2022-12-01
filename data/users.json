@@ -1,0 +1,17 @@
+[
+    {
+        "user_id": 1,
+        "username": "admin",
+        "password": "admin",
+        "scores": [
+            {
+                "score_id": "UW8XNPBAOIKA665SMIHK",
+                "username": "god",
+                "score": 60,
+                "time": "2 seconds",
+                "character": "cartman",
+                "date": "Tue Nov 29 00:52:44 2022"
+            }
+        ]
+    }
+]
