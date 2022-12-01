@@ -67,6 +67,7 @@ class GameOver(BaseScreen):
         """
         make the post request to the web server with the score JSON information
         """
+
         date_time = datetime.datetime.now()
         score = {
             "score_id": ''.join(random.choices(string.ascii_uppercase + string.digits, k=20)),

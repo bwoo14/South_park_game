@@ -1,12 +1,11 @@
 [
     {
-        "user_id": 1,
         "username": "admin",
         "password": "admin",
         "scores": [
             {
                 "score_id": "UW8XNPBAOIKA665SMIHK",
-                "username": "god",
+                "username": "admin",
                 "score": 60,
                 "time": "2 seconds",
                 "character": "cartman",

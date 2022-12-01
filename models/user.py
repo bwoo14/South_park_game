@@ -1,12 +1,13 @@
 import json
+from models.score import Score
 
 class User:
-    def __init__(self, user_id, username, password, scores=None) -> None:
-        self.user_id = user_id
+    def __init__(self, username, password, scores=None) -> None:
         self.username = username
         self.password = password
         if scores != None:
-            self.scores = scores
+            for score in scores:
+                self.scores.append(Score(score['score_id'], score['score'], score['time'], score['character'], score['date']))
         else:
             self.scores = []
 
@@ -22,7 +23,6 @@ class User:
     
     def to_dict(self):
         return {
-            'user_id': self.user_id,
             'username': self.username,
             'password': self.password,
             'scores': [score.to_dict() for score in self.scores]
