@@ -1,21 +1,42 @@
 
-from flask import Flask, render_template, request, url_for
+from flask import Flask, render_template, request, url_for, redirect, flash
 from models.score import Score
 from models.user_database import UserDatabase
 import os
 from flask_login import login_user, current_user, logout_user, login_required
-# from forms import LoginForm
+
+from forms.login_form import LoginForm
+from forms.resgister_form import RegistrationForm
 
 app = Flask(__name__)
+app.config['SECRET_KEY'] = 'b88a7564a30c56d91df77da2c24c4433'
 
 # @app.route("/score_id", methods=['GET'])
 
-# @app.route("/")
-# def index():
+@app.route("/", methods=['GET', 'POST'])
+def register():
+    form = RegistrationForm()
+    if form.validate_on_submit():
+        flash(f' {form.username.data}!', 'success')
+        return redirect(url_for('home'))
+    return render_template('register.html', title='Register', form=form)
+# def login():
+#     database = UserDatabase()
+#     # if current_user.is_authenticated:
+#     #    return redirect(url_for('home'))  # USE THE NAME OF THE FUNCTION NOT THE NAME OF THE HTML FILE, redirecting to homepage after register
 #     form = LoginForm()
-#     return render_template("login.html")
+#     if form.validate_on_submit():
+#         user = database.get_user(form.username.data)
+#         if user and user.password == form.password.data:  # Checking if the inputted password matches the actual password
+#             login_user(user, remember=form.remember.data)
+#             next_page = request.args.get('next')  # Redirects you to next page if you tried to access the page and were redirected to the login
+#             return redirect(next_page) if next_page else redirect(url_for('home')) # check if next_page is safe
+#         else: 
+#             flash('Login Unsuccessful. Incorrect Username or Password', 'danger') # Shows failed login message using bootstrap class 'danger'
+#     return render_template('login.html', title='Login', form=form)
 
-@app.route("/")
+
+@app.route("/home")
 def home():
     """
     This is the home page of the website
