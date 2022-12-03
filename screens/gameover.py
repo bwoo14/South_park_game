@@ -35,6 +35,7 @@ class GameOver(BaseScreen):
          self.present_time = TextBox(SCREEN_WIDTH/2, self.present_score.rect.bottom + 10, 'Final Time: ' + str(final_score['time']), 50, 'black', center=True)
 
          self.enter_username = InputBox(SCREEN_WIDTH/2 - 100, self.play_again.rect.bottom + 10)
+         self.enter_password = InputBox(SCREEN_WIDTH/2 - 100, self.enter_username.rect.bottom + 10)
          self.final_score = final_score
 
          self.score_recorded = False
@@ -57,9 +58,11 @@ class GameOver(BaseScreen):
         
         
         self.enter_username.draw(self.window)
+        self.enter_password.draw(self.window)
     
         self.enter_username.update()
-        if self.enter_username.entered and not self.score_recorded:
+        self.enter_password.update()
+        if self.enter_username.entered and not self.score_recorded and self.enter_password.entered:
             self.score_recorded = True
             self.upload_score()
 
@@ -69,26 +72,30 @@ class GameOver(BaseScreen):
         """
 
         date_time = datetime.datetime.now()
-        score = {
-            "score_id": ''.join(random.choices(string.ascii_uppercase + string.digits, k=20)),
-            "username": self.enter_username.entered,
-            "score": self.final_score['score'],
-            "time": self.final_score['time'],
-            "character": self.selected_character,
-            "date": date_time.strftime("%c") 
+        score_info = {
+            'username': self.enter_username.entered,
+            'password': self.enter_password.entered,
+            'score': {
+                "score_id": ''.join(random.choices(string.ascii_uppercase + string.digits, k=20)),
+                "username": self.enter_username.entered,
+                "score": self.final_score['score'],
+                "time": self.final_score['time'],
+                "character": self.selected_character,
+                "date": date_time.strftime("%c") 
+            }
         }
     
-        # url = 'http://127.0.0.1:5000/submitscore'
-        url = 'http://143.198.226.171:5000/submitscore' # Digital Ocean Server
+        url = 'http://127.0.0.1:5000/submitscore'
+        # url = 'http://143.198.226.171:5000/submitscore' # Digital Ocean Server
         try:
-            x = requests.post(url, json = score)
+            x = requests.post(url, json = score_info)
             print(x.text)
         except:
            print('Server is Down')
                 
            with open('local_scores/Local_score.json','r+') as file:
                file_data = json.load(file)
-               file_data.append(score)
+               file_data.append(score_info)
                file.seek(0)
                json.dump(file_data, file, indent = 4)
         
@@ -109,4 +116,5 @@ class GameOver(BaseScreen):
                 self.next_screen = 'charselect'
         
         self.enter_username.handle_event(event)
+        self.enter_password.handle_event(event)
             
