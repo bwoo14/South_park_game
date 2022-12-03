@@ -1,0 +1,41 @@
+{% extends "layout.html" %}
+{% block content %}
+<style>
+    .char {
+        border: 2px solid black;
+        border-radius: 25px;
+        margin: 20px;
+    }
+    .info {
+        display: flex;
+    }
+</style>
+<body>
+    <h1>{{ user.username }}</h1>
+    <div class="info">
+        <img class='char' src={{ url_for('static', filename='characters/' + mpc + '-front.png') }}>
+        <div>
+            <p>Username: {{ user.username }}</p>
+            <p>Favourite Character: {{ mpc }}</p>
+            <p>High Score: {{ hs }}</p>
+        </div>
+    </div>
+    <h2>Scores:</h2>
+    <table id="score-table" class="table">
+        <thead class="thead-dark">
+            <th onclick="sortTable(1)">Score</th>
+            <th>Time</th>
+            <th onclick="sortTable(2)">Character</th>
+            <th onclick="sortTable(3)">Date</th>
+        </thead>
+        {% for score in user.scores%}
+        <tr>
+            <td>{{ score.score }}</a></td>
+            <td>{{ score.time }}</td>
+            <td><img width="25%" src={{ url_for('static', filename='characters/' + score.character + '-front.png') }}></td>
+            <td>{{ score.date }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+{% endblock content%}

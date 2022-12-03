@@ -1,12 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <title>South Park Scores</title>
-</head>
+
+{% extends "layout.html" %}
+{% block content %}
 <script>
     function sortTable(n) {
       console.log(1)
@@ -87,8 +81,8 @@
         </thead>
         {% for score in scores%}
         <tr>
-            <td><a href={{ url_for('score_info', score_id = score.score_id) }}>{{ score.username }}</a></td>
-            <td>{{ score.score }}</td>
+            <td><a href={{ url_for('view_user', username = score.username) }}>{{ score.username }}</a></td>
+            <td><a href={{ url_for('score_info', score_id = score.score_id) }}>{{ score.score }}</a></td>
             <td>{{ score.time }}</td>
             
             <td><img class='char' src={{ url_for('static', filename='characters/' + score.character + '-front.png') }}></td>
@@ -97,4 +91,4 @@
         {% endfor %}
     </table>
 </body>
-</html>
+{% endblock content%}

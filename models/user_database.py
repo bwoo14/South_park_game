@@ -14,7 +14,7 @@ class UserDatabase:
         with open(self.filename, 'r') as f:
             users = json.load(f)
             for user in users:
-                self.users.append(User(user['user_id'], user['username'], user['password'], user['scores']))
+                self.users.append(User(user['username'], user['password'], user['scores']))
         
     def create_user(self, username, password):
         """
@@ -59,6 +59,15 @@ class UserDatabase:
             for score in user.scores:
                 if score.score_id == score_id:
                     return score
+        return None
+    
+    def username_and_password(self, username, password):
+        """
+        Returns a user object if the user exists in the database
+        """
+        for user in self.users:
+            if user.username == username and user.password == password:
+                return user
         return None
 
     def save_users(self):
