@@ -20,7 +20,7 @@ class UserDatabase:
         """
         Creates a new user in the database
         """
-        user = User(len(self.users), username, password)
+        user = User(username, password)
         self.users.append(user)
 
     def get_user(self, username):

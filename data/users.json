@@ -50,5 +50,10 @@
                 "date": "Tue Nov 29 23o4iuo2i3u4:44 2022"
             }
         ]
+    },
+    {
+        "username": "test",
+        "password": "test",
+        "scores": []
     }
 ]

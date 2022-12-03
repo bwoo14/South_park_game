@@ -11,29 +11,35 @@ from forms.resgister_form import RegistrationForm
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'b88a7564a30c56d91df77da2c24c4433'
 
-# @app.route("/score_id", methods=['GET'])
-
 @app.route("/", methods=['GET', 'POST'])
+def login():
+    database = UserDatabase()
+    form = LoginForm()
+    if form.validate_on_submit():
+        print(form.username.data)
+        user = database.get_user(form.username.data)
+        if user and user.password == form.password.data:
+            flash(f'Welcome!', 'success')
+            return redirect(url_for('home'))
+        flash(f'Incorrect Username or Password', 'danger')
+    return render_template('login.html', title='login', form=form)
+
+@app.route("/register", methods=['GET', 'POST'])
 def register():
+    database = UserDatabase()
     form = RegistrationForm()
     if form.validate_on_submit():
-        flash(f' {form.username.data}!', 'success')
-        return redirect(url_for('home'))
+        
+        # if user not in database, add user to database
+        if not database.get_user(form.username.data):
+            database.create_user(form.username.data, form.password.data)
+            database.save_users()
+            flash(f'Welcome!', 'success')
+            return redirect(url_for('home'))
+        flash(f'Username already exists', 'danger')
     return render_template('register.html', title='Register', form=form)
-# def login():
-#     database = UserDatabase()
-#     # if current_user.is_authenticated:
-#     #    return redirect(url_for('home'))  # USE THE NAME OF THE FUNCTION NOT THE NAME OF THE HTML FILE, redirecting to homepage after register
-#     form = LoginForm()
-#     if form.validate_on_submit():
-#         user = database.get_user(form.username.data)
-#         if user and user.password == form.password.data:  # Checking if the inputted password matches the actual password
-#             login_user(user, remember=form.remember.data)
-#             next_page = request.args.get('next')  # Redirects you to next page if you tried to access the page and were redirected to the login
-#             return redirect(next_page) if next_page else redirect(url_for('home')) # check if next_page is safe
-#         else: 
-#             flash('Login Unsuccessful. Incorrect Username or Password', 'danger') # Shows failed login message using bootstrap class 'danger'
-#     return render_template('login.html', title='Login', form=form)
+
+
 
 
 @app.route("/home")
