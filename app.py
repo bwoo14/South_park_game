@@ -53,7 +53,7 @@ def submitscore():
     if request.method == 'POST':
         database = UserDatabase()
         req = request.json
-        score_info = request.json['score_info']
+        score_info = request.json['score']
         user = database.username_and_password(req['username'], req['password'])
         if user:
             score = Score(score_info['score_id'], score_info['username'], score_info['score'], score_info['time'], score_info['character'], score_info['date'])
