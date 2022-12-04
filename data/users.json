@@ -4,12 +4,12 @@
         "password": "admin",
         "scores": [
             {
-                "score_id": "GQ6SPLQJ4EX2ME151HL7",
-                "username": "",
-                "score": 12960,
-                "time": "32 seconds",
+                "score_id": "GPOY2O529JATZ4XEAYC4",
+                "username": "admin",
+                "score": 210,
+                "time": "Lost",
                 "character": "stan",
-                "date": "Sat Dec  3 21:30:39 2022"
+                "date": "Sat Dec  3 22:52:09 2022"
             }
         ]
     },
@@ -38,20 +38,21 @@
     {
         "username": "test",
         "password": "test",
-        "scores": []
+        "scores": [
+            {
+                "score_id": "OV67IZS90L0DZCP3CFE9",
+                "username": "test",
+                "score": 50,
+                "time": "Lost",
+                "character": "kyle",
+                "date": "Sat Dec  3 22:55:27 2022"
+            }
+        ]
     },
     {
         "username": "dave",
         "password": "dave",
         "scores": [
-            {
-                "score_id": "ON9V8AVNP9NDIKJMLKJH",
-                "username": "dave",
-                "score": 35,
-                "time": "Lost",
-                "character": "kyle",
-                "date": "Sat Dec  3 20:07:04 2022"
-            },
             {
                 "score_id": "S3MPZ65QQ8ERCB7A09C6",
                 "username": "dave",

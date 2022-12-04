@@ -1,12 +1,12 @@
 import json
 from models.user import User
-
+import os
 class UserDatabase:
     """
     a class for the database
     """
     def __init__(self) -> None:
-        self.filename = './data/users.json'
+        self.filename = os.path.abspath('./data/users.json')
         self.users = []
         self.load_users()
 

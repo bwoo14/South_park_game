@@ -94,6 +94,7 @@ class GameOver(BaseScreen):
                 "date": date_time.strftime("%c") 
             }
         }
+        
         if server_choice == 'website':
             url = 'http://143.198.226.171:5000/submitscore' # Digital Ocean Server
         else:

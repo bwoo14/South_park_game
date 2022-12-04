@@ -142,7 +142,7 @@ def delete_score(score_id, username):
         user.delete_score(score_id)
         database.save_users()
         # redirect to the user page
-        return redirect(url_for('home'))
+        return redirect(url_for('view_user', username=username))
     else:
         flash('Please login to view this page', 'danger')
         return redirect(url_for('login'))
