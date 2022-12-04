@@ -17,7 +17,7 @@ http://143.198.226.171:5000/
 
 ## Installation
 
-- After cloning this repository, you will need to setup a python virtual environment, you will need to install Pygame, Flask, flask-wtf, requests
+- After cloning this repository, you will need to setup a python virtual environment, you will need to install **Pygame, Flask, flask-wtf, requests**
 - Activate the virtual environment
 - **You must be inside of the South_Park_Game directory to run this code**
 - If you wish to submit scores locally, you will have to turn the server on by running the `app.py` module. This will launch the Flask Server. Otherwise you can submit scores to the website after the game ends
