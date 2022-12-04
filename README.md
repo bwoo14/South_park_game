@@ -2,6 +2,14 @@
 
 By Brandon Woo<br>
 
+## Visit the leaderboard
+
+http://143.198.226.171:5000/
+
+(The site is very unstable so it might not load on the first try lol)
+
+**NOTE: all leaderboard buttons in the game take you to the DigitalOcean website, to see the local server, you will have to start `app.py` and go to http://localhost:5000**
+
 ## Controls
 - `A` and `D` to move left and right respectively
 - `SPACE` to jump

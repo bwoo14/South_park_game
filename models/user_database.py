@@ -34,16 +34,6 @@ class UserDatabase:
             if user.username == username:
                 return user
         return None
-    
-    def remove_user(self, user_id):
-        """
-        Removes a user from the database
-        """
-        for user in self.users:
-            if user.user_id == user_id:
-                self.users.remove(user)
-                return True
-        return False
 
     def get_scores(self, sorted=False):
         """
