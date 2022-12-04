@@ -4,20 +4,12 @@
         "password": "admin",
         "scores": [
             {
-                "score_id": "UW8XNPBAOIKA665SMIHK",
-                "username": "admin",
-                "score": 60,
-                "time": "2 seconds",
-                "character": "cartman",
-                "date": "Tue Nov 29 00:52:44 2022"
-            },
-            {
-                "score_id": "FFFFFFFFFFFFFFFFFFFF",
-                "username": "admin",
-                "score": 60,
-                "time": "2 seconds",
+                "score_id": "GQ6SPLQJ4EX2ME151HL7",
+                "username": "",
+                "score": 12960,
+                "time": "32 seconds",
                 "character": "stan",
-                "date": "Tue Nov 29 23o4iuo2i3u4:44 2022"
+                "date": "Sat Dec  3 21:30:39 2022"
             }
         ]
     },

@@ -114,5 +114,18 @@ def logout():
     session.pop('user', None)
     return redirect(url_for('login'))
 
+
+@app.route("/delete_score/<string:username>/<string:score_id>", methods=['GET' , 'POST'])
+def delete_score(score_id, username):
+    if "user" in session:
+        database = UserDatabase()
+        user = database.get_user(username)
+        user.delete_score(score_id)
+        database.save_users()
+        return redirect(url_for('home'))
+    else:
+        flash('Please login to view this page', 'danger')
+        return redirect(url_for('login'))
+
 if __name__ == "__main__":
     app.run(debug=True)
