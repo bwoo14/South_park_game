@@ -163,7 +163,16 @@
     {
         "username": "dave",
         "password": "dave",
-        "scores": []
+        "scores": [
+            {
+                "score_id": "ON9V8AVNP9NDIKJMLKJH",
+                "username": "",
+                "score": 35,
+                "time": "Lost",
+                "character": "kyle",
+                "date": "Sat Dec  3 20:07:04 2022"
+            }
+        ]
     },
     {
         "username": "john",

@@ -39,7 +39,10 @@ class GameOver(BaseScreen):
          self.final_score = final_score
 
          self.submit = pygame.image.load('images/submit.png')
-         self.submit_rect = self.submit.get_rect(center=(SCREEN_WIDTH/2, self.enter_password.rect.bottom + 25))
+         self.submit_rect = self.submit.get_rect(center = (SCREEN_WIDTH/2 - self.submit.get_width()/2 - 10, self.enter_password.rect.bottom + 25))
+
+         self.submit_website = pygame.image.load('images/submit-server.png')
+         self.submit_website_rect = self.submit_website.get_rect(center = (SCREEN_WIDTH/2 + self.submit_website.get_width()/2 + 10, self.enter_password.rect.bottom + 25))
 
          self.score_recorded = False
 
@@ -64,6 +67,7 @@ class GameOver(BaseScreen):
         self.enter_password.draw(self.window)
 
         self.window.blit(self.submit, self.submit_rect)
+        self.window.blit(self.submit_website, self.submit_website_rect)
     
         self.enter_username.update()
         self.enter_password.update()
@@ -72,7 +76,7 @@ class GameOver(BaseScreen):
         #     self.score_recorded = True
         #     self.upload_score()
 
-    def upload_score(self):
+    def upload_score(self, server_choice='local'):
         """
         make the post request to the web server with the score JSON information
         """
@@ -90,9 +94,10 @@ class GameOver(BaseScreen):
                 "date": date_time.strftime("%c") 
             }
         }
-    
-        url = 'http://127.0.0.1:5000/submitscore'
-        # url = 'http://143.198.226.171:5000/submitscore' # Digital Ocean Server
+        if server_choice == 'website':
+            url = 'http://143.198.226.171:5000/submitscore' # Digital Ocean Server
+        else:
+            url = 'http://127.0.0.1:5000/submitscore' # Local Server
         try:
             x = requests.post(url, json = score_info)
             print(x.text)
@@ -147,6 +152,12 @@ class GameOver(BaseScreen):
                 if not self.score_recorded:
                     self.score_recorded = True
                     self.upload_score()
+                
+            elif self.submit_website_rect.collidepoint(pos):
+                if not self.score_recorded:
+                    self.score_recorded = True
+                    self.upload_score('website')
+            
         
         self.enter_username.handle_event(event)
         self.enter_password.handle_event(event)
