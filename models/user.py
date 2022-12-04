@@ -27,6 +27,8 @@ class User:
         This function returns the most played character
         """
         character_count = {}
+        if len(self.scores) == 0:
+            return 'cartman'
         for score in self.scores:
             if score.character in character_count:
                 character_count[score.character] += 1

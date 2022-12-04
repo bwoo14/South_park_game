@@ -42,13 +42,15 @@ class UserDatabase:
                 return True
         return False
 
-    def get_scores(self):
+    def get_scores(self, sorted=False):
         """
         Returns a list of all scores in the database
         """
         scores = []
         for user in self.users:
             scores.extend(user.scores)
+        if sorted:
+            scores.sort(key=lambda x: x.score, reverse=True)
         return scores
 
     def get_score(self, score_id):

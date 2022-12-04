@@ -87,7 +87,7 @@ class GameOver(BaseScreen):
             'password': self.enter_password.text,
             'score': {
                 "score_id": ''.join(random.choices(string.ascii_uppercase + string.digits, k=20)),
-                "username": self.enter_username.entered,
+                "username": self.enter_username.text,
                 "score": self.final_score['score'],
                 "time": self.final_score['time'],
                 "character": self.selected_character,

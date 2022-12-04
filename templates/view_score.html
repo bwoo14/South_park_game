@@ -23,6 +23,7 @@
         <h1>South Park Game Scores:</h1>
         <div class="links">
           <a href="{{ url_for('home') }}">Home</a>
+          <a href="{{ url_for('view_user', username = session['user']) }}">Profile</a>
           <a href="{{ url_for('logout') }}">Logout</a>
         </div>
     </nav>

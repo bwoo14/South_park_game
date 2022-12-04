@@ -18,118 +18,6 @@
                 "time": "2 seconds",
                 "character": "stan",
                 "date": "Tue Nov 29 23o4iuo2i3u4:44 2022"
-            },
-            {
-                "score_id": "H090CKW7A14YLB2XNPGM",
-                "username": "admin",
-                "score": 200,
-                "time": "Lost",
-                "character": "stan",
-                "date": "Fri Dec  2 19:55:38 2022"
-            },
-            {
-                "score_id": "JC3ML8APBTJB5LM9NUXM",
-                "username": "admin",
-                "score": 140,
-                "time": "Lost",
-                "character": "kyle",
-                "date": "Fri Dec  2 22:58:49 2022"
-            },
-            {
-                "score_id": "5CIKBKWDNR75PW2OYKI2",
-                "username": "admin",
-                "score": 5,
-                "time": "Lost",
-                "character": "stan",
-                "date": "Fri Dec  2 23:55:38 2022"
-            },
-            {
-                "score_id": "TU2U2C2PVGJ8GZ5FDEX9",
-                "username": "admin",
-                "score": 30,
-                "time": "Lost",
-                "character": "stan",
-                "date": "Fri Dec  2 23:59:02 2022"
-            },
-            {
-                "score_id": "RA5ZGU3B12OZP9UX4AF3",
-                "username": "admin",
-                "score": 65,
-                "time": "Lost",
-                "character": "stan",
-                "date": "Sat Dec  3 00:00:48 2022"
-            },
-            {
-                "score_id": "DP3M7KCVVHSORBGUL1Y3",
-                "username": "admin",
-                "score": 25,
-                "time": "Lost",
-                "character": "stan",
-                "date": "Sat Dec  3 00:04:52 2022"
-            },
-            {
-                "score_id": "SZLMAKQT0KK48JSNVWDE",
-                "username": "admin",
-                "score": -5,
-                "time": "Lost",
-                "character": "stan",
-                "date": "Sat Dec  3 00:05:40 2022"
-            },
-            {
-                "score_id": "6801DL2OLU4UVS5JW6EI",
-                "username": "admin",
-                "score": 55,
-                "time": "Lost",
-                "character": "stan",
-                "date": "Sat Dec  3 00:06:30 2022"
-            },
-            {
-                "score_id": "ZI673WIF5SGFEZO1F6L0",
-                "username": "admin",
-                "score": -5,
-                "time": "Lost",
-                "character": "kenny",
-                "date": "Sat Dec  3 13:45:38 2022"
-            },
-            {
-                "score_id": "V5TWUQSAH8ICKG0R81GI",
-                "username": "admin",
-                "score": 15,
-                "time": "Lost",
-                "character": "stan",
-                "date": "Sat Dec  3 14:42:38 2022"
-            },
-            {
-                "score_id": "146NZNU2XMA77QZ07OTT",
-                "username": "",
-                "score": 35,
-                "time": "Lost",
-                "character": "cartman",
-                "date": "Sat Dec  3 14:43:48 2022"
-            },
-            {
-                "score_id": "QTPTH98BEGBAZ8H5W3UK",
-                "username": "",
-                "score": 15,
-                "time": "Lost",
-                "character": "stan",
-                "date": "Sat Dec  3 14:45:21 2022"
-            },
-            {
-                "score_id": "7LUBI625TIR4VBR3YCK8",
-                "username": "",
-                "score": 5,
-                "time": "Lost",
-                "character": "stan",
-                "date": "Sat Dec  3 14:51:53 2022"
-            },
-            {
-                "score_id": "95QD13BTKDQJQJNELMTB",
-                "username": "",
-                "score": 115,
-                "time": "Lost",
-                "character": "stan",
-                "date": "Sat Dec  3 14:52:59 2022"
             }
         ]
     },
@@ -166,11 +54,19 @@
         "scores": [
             {
                 "score_id": "ON9V8AVNP9NDIKJMLKJH",
-                "username": "",
+                "username": "dave",
                 "score": 35,
                 "time": "Lost",
                 "character": "kyle",
                 "date": "Sat Dec  3 20:07:04 2022"
+            },
+            {
+                "score_id": "S3MPZ65QQ8ERCB7A09C6",
+                "username": "dave",
+                "score": 14110,
+                "time": "34 seconds",
+                "character": "kyle",
+                "date": "Sat Dec  3 20:52:53 2022"
             }
         ]
     },
@@ -187,6 +83,11 @@
     {
         "username": "darryl",
         "password": "darryl",
+        "scores": []
+    },
+    {
+        "username": "tim",
+        "password": "tim",
         "scores": []
     }
 ]

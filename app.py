@@ -57,7 +57,7 @@ def home():
     """
     if "user" in session:
         database = UserDatabase()
-        scores = database.get_scores()
+        scores = database.get_scores(sorted=True)
         return render_template("home.html", scores=scores)
     else:
         flash('Please login to view this page', 'danger')
