@@ -1,5 +1,8 @@
 import json
 class Score:
+    """
+    A class for the score object
+    """
     def __init__(self, score_id, username, score, time, character, date) -> None:
         self.score_id = score_id
         self.username = username
@@ -9,6 +12,9 @@ class Score:
         self.date = date
 
     def to_dict(self):
+        """
+        Returns a dictionary of the score object
+        """
         return {
             'score_id': self.score_id,
             'username': self.username,
@@ -17,8 +23,3 @@ class Score:
             'character': self.character,
             'date': self.date
         }
-           
-
-# if __name__ == '__main__':
-#     s = ScoreList()
-#     print(s.get_score("fffffffffffffffffff"))

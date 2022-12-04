@@ -2,6 +2,9 @@ import json
 from models.score import Score
 
 class User:
+    """
+    a class for a User object
+    """
     def __init__(self, username, password, scores=None) -> None:
         self.username = username
         self.password = password
@@ -13,9 +16,15 @@ class User:
             self.scores = []
 
     def add_score(self, score):
+        """
+        This function adds a score to the user
+        """
         self.scores.append(score)
     
     def delete_score(self, score_id):
+        """
+        This function deletes a score from the user
+        """
         for score in self.scores:
             if score.score_id == score_id:
                 self.scores.remove(score)
@@ -47,6 +56,9 @@ class User:
         return high_score
     
     def to_dict(self):
+        """
+        This function returns a dictionary of the user object
+        """
         return {
             'username': self.username,
             'password': self.password,

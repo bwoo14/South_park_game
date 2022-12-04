@@ -15,6 +15,9 @@ app.permanent_session_lifetime = timedelta(minutes=5)
 @app.route("/", methods=['GET', 'POST'])
 @app.route("/login", methods=['GET', 'POST'])
 def login():
+    """
+    This function handles the login page
+    """
     if "user" in session:
         return redirect(url_for('home'))
     else:
@@ -22,8 +25,10 @@ def login():
         form = LoginForm()
         if form.validate_on_submit():
             user = database.get_user(form.username.data)
+            # Check if the user exists, and their password matches
             if user and user.password == form.password.data:
                 flash(f'Welcome!', 'success')
+                # puts user in the sesion
                 session['user'] = user.username
                 session.permanent = True
                 return redirect(url_for('home'))
@@ -32,6 +37,9 @@ def login():
 
 @app.route("/register", methods=['GET', 'POST'])
 def register():
+    """
+    This function handles the register page
+    """
     database = UserDatabase()
     form = RegistrationForm()
     if form.validate_on_submit():
@@ -101,9 +109,11 @@ def submitscore():
         database = UserDatabase()
         req = request.json
         score_info = request.json['score']
+        # checks if password and username are correct
         user = database.username_and_password(req['username'], req['password'])
         if user:
             score = Score(score_info['score_id'], score_info['username'], score_info['score'], score_info['time'], score_info['character'], score_info['date'])
+            # adds score to database
             user.add_score(score)
             database.save_users()
             return "Score added", 200
@@ -111,17 +121,27 @@ def submitscore():
 
 @app.route("/logout")
 def logout():
+    """
+    This is the page that logs the user out
+    """
+    # remove the username from the session if it's there
     session.pop('user', None)
     return redirect(url_for('login'))
 
 
-@app.route("/delete_score/<string:username>/<string:score_id>", methods=['GET' , 'POST'])
+@app.route("/delete_score/<string:username> /<string:score_id>", methods=['GET' , 'POST'])
 def delete_score(score_id, username):
+    """
+    This is the page that deletes the score
+    """
     if "user" in session:
         database = UserDatabase()
+        # get the user
         user = database.get_user(username)
+        # get the score
         user.delete_score(score_id)
         database.save_users()
+        # redirect to the user page
         return redirect(url_for('home'))
     else:
         flash('Please login to view this page', 'danger')

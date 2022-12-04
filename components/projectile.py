@@ -19,10 +19,16 @@ class Projectile(pygame.sprite.Sprite):
         self.rect.y = y
 
     def update(self, screen):
+        """
+        Updates the projectile's position
+        """
         self.rect.x += self.speed * self.dirx
         self.rect.y += self.speed * self.diry
         screen.blit(self.projectile_img, self.rect)
 
     def get_position(self):
-         return (self.rect.x, self.rect.y)
+        """
+        Returns the position of the projectile
+        """
+        return (self.rect.x, self.rect.y)
 

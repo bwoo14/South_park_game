@@ -5,6 +5,9 @@ from .projectile import Projectile
 from .character import Character
 
 class PlayerCharacter(Character):
+    """
+    a class for the player character model
+    """
     def update(self, screen, ground_collision=False):
         """
         handles key presses for the character model as well as the physics of the model

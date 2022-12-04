@@ -2,6 +2,9 @@ import json
 from models.user import User
 
 class UserDatabase:
+    """
+    a class for the database
+    """
     def __init__(self) -> None:
         self.filename = './data/users.json'
         self.users = []

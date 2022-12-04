@@ -4,7 +4,9 @@ COLOR_ACTIVE = pygame.Color('chartreuse')
 COLOR_INACTIVE = pygame.Color('black')
 
 class InputBox(pygame.sprite.Sprite):
-
+    """
+    A class for input boxes
+    """
     def __init__(self, x, y, text=''):
         super().__init__() 
         self.color = COLOR_INACTIVE
@@ -19,6 +21,7 @@ class InputBox(pygame.sprite.Sprite):
         self.submitted = False
 
     def handle_event(self, event=None):
+        
         if event.type == pygame.MOUSEBUTTONDOWN and not self.submitted:
 
             # If the user clicked on the input_box rect.
@@ -51,4 +54,7 @@ class InputBox(pygame.sprite.Sprite):
         pygame.draw.rect(window, self.color, self.rect, 2)
 
     def rerender(self):
+        """
+        Rerenders the text
+        """
         self.txt_surface = self.font.render(self.text, True, 'white')

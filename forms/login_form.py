@@ -6,6 +6,9 @@ from wtforms.validators import DataRequired, Length
 from models.user import User
 
 class LoginForm(FlaskForm):
+    """
+    This class handles the login form, it inherits from FlaskForm
+    """
 
     username = StringField('Username', validators=[DataRequired(), Length(min=2, max=20)])
     password = PasswordField('Password', validators=[DataRequired()])

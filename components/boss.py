@@ -5,6 +5,9 @@ from .character import Character
 import random
 
 class Boss(Character):
+    """
+    A class for a boss object, that inherits from the Character class
+    """
     def update(self, screen, ground_collision=False, move_pref = None):
         """
         handles key presses for the character model as well as the physics of the model
@@ -43,6 +46,9 @@ class Boss(Character):
         screen.blit(self.image, self.rect)
     
     def move_boss(self, move, ground_collision, jump):
+        """
+        handles the movement of the boss
+        """
         dx = 0
         if jump == 1 and ground_collision:
             self.vel_y = -15

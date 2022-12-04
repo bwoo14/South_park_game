@@ -5,9 +5,12 @@ from .projectile import Projectile
 
 import pygame
 
-CARTMAN = (100, 100)
+
 
 class Character(pygame.sprite.Sprite):
+    """
+    A class characters in the game
+    """
     def __init__(self, character, x, y, health = 100, speed=5):
         self.character_name = character
         self.images_right = []
@@ -21,6 +24,7 @@ class Character(pygame.sprite.Sprite):
         # if character is not of the player character type, return false
         if character in ['cartman', 'stan', 'kyle', 'kenny']:
             self.is_player_character = True
+            self.player_size = (100, 100)
         else:
             self.is_player_character = False
         
@@ -29,7 +33,7 @@ class Character(pygame.sprite.Sprite):
         for num in range(1, 5):
             img_right = pygame.image.load(f'images/{character}/{character}side{num}.png')
             if self.is_player_character:
-                img_right = pygame.transform.scale(img_right, CARTMAN)
+                img_right = pygame.transform.scale(img_right, self.player_size)
             else:
                 img_right = pygame.transform.scale(img_right, (img_right.get_width()/2, img_right.get_height()/2))
             
@@ -40,10 +44,11 @@ class Character(pygame.sprite.Sprite):
         for num in range(1, 5):
             img_left = pygame.image.load(f'images/{character}/{character}side{num}.png')
             if self.is_player_character:
-                img_left = pygame.transform.scale(img_left, CARTMAN)
+                img_left = pygame.transform.scale(img_left, self.player_size)
             else:
                 img_left = pygame.transform.scale(img_left, (img_left.get_width()/2, img_left.get_height()/2))
             self.images_left.append(img_left)
+        
         self.image = self.images_right[self.index]
         self.rect = self.image.get_rect()
         self.rect.x = x
@@ -56,17 +61,29 @@ class Character(pygame.sprite.Sprite):
 
 
     def update(self, screen):
+        """
+        Updates the character's position
+        """
         projectile = Projectile(self)
         projectile.draw(screen)
 
 
     def get_position(self):
+        """
+        Returns the position of the character
+        """
         return (self.rect.x, self.rect.y)
 
     def get_projectile(self, x, y, dirx, diry, speed=5):
+        """
+        Returns the character's projectile object
+        """
         return Projectile(x, y, dirx, diry, self, speed)
     
     def animate(self):
+        """
+        Animates the character
+        """
         if self.counter > self.walk_cooldown:
             self.counter = 0
             self.index += 1
