@@ -1,6 +1,8 @@
 from screens import BaseScreen
 import pygame
 from global_variables import *
+from components import TextBox
+import webbrowser
 
 class MainMenu(BaseScreen):
     """ The main menu screen for the game """
@@ -17,6 +19,10 @@ class MainMenu(BaseScreen):
         self.start_button = pygame.transform.scale(start_button, (200, 200))
         self.start_button_rect = self.start_button.get_rect(center=(SCREEN_WIDTH/2, SCREEN_HEIGHT/2))
 
+        self.leaderboard = TextBox(SCREEN_WIDTH/2, self.start_button_rect.bottom, 'Leaderboard', 20, 'blue', True)
+
+        self.exit = TextBox(SCREEN_WIDTH/2, self.leaderboard.rect.bottom + 10, 'Exit', 20, 'red', center=True)
+
 
     def draw(self):
         """
@@ -25,6 +31,8 @@ class MainMenu(BaseScreen):
         self.window.blit(self.menu_image, (0, 0))
         self.window.blit(self.logo, self.logo_rect)
         self.window.blit(self.start_button , self.start_button_rect)
+        self.leaderboard.draw(self.window)
+        self.exit.draw(self.window)
 
     def manage_event(self, event):
         """
@@ -35,3 +43,8 @@ class MainMenu(BaseScreen):
             mouse_pos = pygame.mouse.get_pos() # get the mouse pos 
             if self.start_button_rect.collidepoint(mouse_pos): #checking if the mouse_pos is inside the rectangle 
                 self.next_screen = 'charselect'
+            if self.leaderboard.rect.collidepoint(mouse_pos):
+                webbrowser.open(r"http://127.0.0.1:5000/home") # Uncomment for local server
+                # webbrowser.open(r"http://143.198.226.171:5000/home")
+            if self.exit.rect.collidepoint(mouse_pos): #checking if the mouse_pos is inside the rectangle 
+                self.running = False

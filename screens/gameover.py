@@ -38,6 +38,9 @@ class GameOver(BaseScreen):
          self.enter_password = InputBox(SCREEN_WIDTH/2 - 100, self.enter_username.rect.bottom + 10)
          self.final_score = final_score
 
+         self.submit = pygame.image.load('images/submit.png')
+         self.submit_rect = self.submit.get_rect(center=(SCREEN_WIDTH/2, self.enter_password.rect.bottom + 25))
+
          self.score_recorded = False
 
     def draw(self):
@@ -59,12 +62,15 @@ class GameOver(BaseScreen):
         
         self.enter_username.draw(self.window)
         self.enter_password.draw(self.window)
+
+        self.window.blit(self.submit, self.submit_rect)
     
         self.enter_username.update()
         self.enter_password.update()
-        if self.enter_username.entered and not self.score_recorded and self.enter_password.entered:
-            self.score_recorded = True
-            self.upload_score()
+
+        # if self.enter_username.entered and not self.score_recorded and self.enter_password.entered:
+        #     self.score_recorded = True
+        #     self.upload_score()
 
     def upload_score(self):
         """
@@ -73,8 +79,8 @@ class GameOver(BaseScreen):
 
         date_time = datetime.datetime.now()
         score_info = {
-            'username': self.enter_username.entered,
-            'password': self.enter_password.entered,
+            'username': self.enter_username.text,
+            'password': self.enter_password.text,
             'score': {
                 "score_id": ''.join(random.choices(string.ascii_uppercase + string.digits, k=20)),
                 "username": self.enter_username.entered,
@@ -90,16 +96,38 @@ class GameOver(BaseScreen):
         try:
             x = requests.post(url, json = score_info)
             print(x.text)
+            if x.status_code == 400:
+                raise Exception('Invalid username or password')
+            self.enter_username.text = 'Submitted!'
+            self.enter_password.text = ''
+            self.enter_username.rerender()
+            self.enter_password.rerender()
+            
+            self.enter_username.submitted = True
+            self.enter_password.submitted = True
         except:
-           print('Server is Down')
+            print('Server is Down')
+            self.enter_username.submitted = False
+            self.enter_password.submitted = False
+            self.enter_username.text = 'Error!'
+            self.enter_password.text = ''
+
+            self.enter_username.rerender()
+            self.enter_password.rerender()
                 
-           with open('local_scores/Local_score.json','r+') as file:
-               file_data = json.load(file)
-               file_data.append(score_info)
-               file.seek(0)
-               json.dump(file_data, file, indent = 4)
+            self.score_recorded = False
+
+            
+
         
-        self.recorded = True
+                
+        #    with open('local_scores/Local_score.json','r+') as file:
+        #        file_data = json.load(file)
+        #        file_data.append(score_info)
+        #        file.seek(0)
+        #        json.dump(file_data, file, indent = 4)
+        
+        
 
     def manage_event(self, event):
         """
@@ -114,6 +142,11 @@ class GameOver(BaseScreen):
 
             elif self.play_again.rect.collidepoint(pos):
                 self.next_screen = 'charselect'
+
+            elif self.submit_rect.collidepoint(pos):
+                if not self.score_recorded:
+                    self.score_recorded = True
+                    self.upload_score()
         
         self.enter_username.handle_event(event)
         self.enter_password.handle_event(event)

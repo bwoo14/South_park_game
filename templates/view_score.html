@@ -9,9 +9,22 @@
         border: 2px solid black;
         border-radius: 25px;
     }
+    nav {
+        display: flex;
+        justify-content: space-between;
+      }
+    .links {
+        margin: 10px;
+      }
 </style>
 <body>
-    <h1>South Park Game Scores:</h1>
+    <nav>
+        <h1>South Park Game Scores:</h1>
+        <div class="links">
+          <a href="{{ url_for('home') }}">Home</a>
+          <a href="{{ url_for('logout') }}">Logout</a>
+        </div>
+    </nav>
     <div class="player-information">
         <img class='char' src={{ url_for('static', filename='characters/' + score.character + '-front.png') }}>
         <div>

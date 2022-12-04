@@ -13,7 +13,7 @@ class GameScreen(BaseScreen):
         bg_img = pygame.image.load('images/background.jpg').convert()
         self.bg_img = pygame.transform.scale(bg_img, (SCREEN_WIDTH, SCREEN_HEIGHT))
         self.img_width = self.bg_img.get_width()
-        self.character = PlayerCharacter(selected_character, 480, 270, health=100)
+        self.character = PlayerCharacter(selected_character, 480, 270, health=10)
         self.bosses = [ 
                         Boss('kylesmom', 0, 100, health=150, speed=3),
                         Boss('snooki', 0, 100, health=100, speed=4),
