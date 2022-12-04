@@ -19,5 +19,8 @@ class TextBox:
             self.rect.y = y
 
     def draw(self, screen):
+        """
+        draws the textbox
+        """
         screen.blit(self.txt_surface, self.rect)
 

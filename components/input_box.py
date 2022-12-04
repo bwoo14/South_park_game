@@ -21,6 +21,9 @@ class InputBox(pygame.sprite.Sprite):
         self.submitted = False
 
     def handle_event(self, event=None):
+        """
+        Handles events
+        """
         
         if event.type == pygame.MOUSEBUTTONDOWN and not self.submitted:
 
@@ -43,11 +46,17 @@ class InputBox(pygame.sprite.Sprite):
                 self.txt_surface = self.font.render(self.text, True, 'white')
                 
     def update(self):
+        """
+        Updates the input box
+        """
         # Resize the box if the text is too long.
         width = max(200, self.txt_surface.get_width()+10)
         self.rect.w = width
 
     def draw(self, window):
+        """
+        Draws the input box
+        """
         # Blit the text.
         window.blit(self.txt_surface, (self.rect.x+5, self.rect.y+5))
         # Blit the rect.

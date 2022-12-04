@@ -10,6 +10,7 @@ import json
 import datetime
 
 class GameOver(BaseScreen):
+    """ The game over screen for the game """
     def __init__(self, screen, final_score):
          super().__init__(screen)
          bg_img = pygame.image.load('images/background.jpg').convert()
@@ -55,26 +56,24 @@ class GameOver(BaseScreen):
 
         self.window.blit(self.game_over_img , self.game_over_img_rect)
 
-
+        # Draw the final score and time
         self.present_score.draw(self.window)
         if self.final_score['time'] != 'Lost':
             self.present_time.draw(self.window)
         self.leaderboard.draw(self.window)
         self.play_again.draw(self.window)
         
-        
+        # userame and password input boxes
         self.enter_username.draw(self.window)
         self.enter_password.draw(self.window)
 
+        # submit buttons
         self.window.blit(self.submit, self.submit_rect)
         self.window.blit(self.submit_website, self.submit_website_rect)
     
         self.enter_username.update()
         self.enter_password.update()
 
-        # if self.enter_username.entered and not self.score_recorded and self.enter_password.entered:
-        #     self.score_recorded = True
-        #     self.upload_score()
 
     def upload_score(self, server_choice='local'):
         """
@@ -122,17 +121,6 @@ class GameOver(BaseScreen):
             self.enter_password.rerender()
                 
             self.score_recorded = False
-
-            
-
-        
-                
-        #    with open('local_scores/Local_score.json','r+') as file:
-        #        file_data = json.load(file)
-        #        file_data.append(score_info)
-        #        file.seek(0)
-        #        json.dump(file_data, file, indent = 4)
-        
         
 
     def manage_event(self, event):

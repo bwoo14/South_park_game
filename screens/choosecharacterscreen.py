@@ -3,6 +3,7 @@ import pygame
 from global_variables import *
 
 class ChooseCharacterScreen(BaseScreen):
+    """ The screen where the user chooses their character """
     def __init__(self, screen):
         super().__init__(screen)
         menu_image = pygame.image.load('images/main-menu.png')
@@ -51,6 +52,9 @@ class ChooseCharacterScreen(BaseScreen):
             
                 
     def load_image(self, image):
+        """
+        Load the image and return the image
+        """
         char_size = 200
         loaded_image = pygame.image.load(image)
         return pygame.transform.scale(loaded_image, (char_size, char_size))

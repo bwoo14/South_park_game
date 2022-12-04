@@ -6,7 +6,9 @@ By Brandon Woo<br>
 
 http://143.198.226.171:5000/
 
-(The site is very unstable so it might not load on the first try lol)
+(The site is very unstable so it might not load on the first try lol)<br>
+
+**YOU WILL NEED TO MAKE AN ACCOUNT ON THE WEBSITE TO SUBMIT YOUR SCORES. IF YOU WANT TO SUBMIT SCORES ON THE LOCAL SERVER YOU WILL ALSO HAVE TO MAKE AN ACCOUNT THERE**
 
 **NOTE: all leaderboard buttons in the game take you to the DigitalOcean website, to see the local server, you will have to start `app.py` and go to http://localhost:5000**
 
@@ -28,7 +30,7 @@ http://143.198.226.171:5000/
 ![](./readme_images/main-screen.png)
 2. After pressing play, you will be presented with the character select screen. Choose a character by clicking on one.
 ![](./readme_images/charac-select-screen.png)
-3. You will be taken to the game screen. In the game there are 3 bosses to fight. Each boss has different strengths. The first boss, Kyle's mom, is the base boss. The second boss, snooki, has less health but can move faster. The third boss, satan, has the most health but is much slower. The current boss will randomly shoot bosses towards the player's location. To defeat the boss, move your character with the `A` and `D` key to move left and right respectively. You can shoot the boss by left clicking and a projectile will shoot towards your cursor's location.
+3. You will be taken to the game screen. In the game there are 3 bosses to fight. Each boss has different strengths. The first boss, Kyle's mom, is the base boss. The second boss, snooki, has less health but can move faster. The third boss, satan, has the most health but is much slower. The current boss will randomly shoot bosses towards the player's location. To defeat the boss, move your character with the `A` and `D` key to move left and right respectively. You can shoot the boss by left clicking and a projectile will shoot towards your cursor's location. There is a cooldown of one second for the player shooting.
 ![](./readme_images/gamescreen.png)
 4. The game will end after you either, die, defeat all of the bosses. On the game over screen, you have the option to play again, view the leaderboard, and submit your score to the website. If you won the game, your score will be multiplied by the time you were alive. **Therefore, the game rewards you for lasting as long as possible**. You will need to have an account inside of the database to access the scores. You can make one for the local server at http://localhost:5000/register or on the website at http://143.198.226.171/register
 To submit your score you will have to click the box, and type in your username into the first box and your password into the second box, then click submit on the button for the server you wish to post to. Your time and score will be submitted.

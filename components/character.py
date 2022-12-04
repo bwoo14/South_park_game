@@ -12,6 +12,7 @@ class Character(pygame.sprite.Sprite):
     A class characters in the game
     """
     def __init__(self, character, x, y, health = 100, speed=5):
+        super().__init__()
         self.character_name = character
         self.images_right = []
         self.images_left = []

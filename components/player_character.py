@@ -23,10 +23,12 @@ class PlayerCharacter(Character):
             self.jumped = True
         if key[pygame.K_SPACE] == False:
             self.jumped = False
+        # move character left
         if key[pygame.K_a]:
             dx -= self.speed
             self.counter += 1
             self.direction = -1
+        # move character right
         if key[pygame.K_d]:
             dx += self.speed
             self.counter += 1
