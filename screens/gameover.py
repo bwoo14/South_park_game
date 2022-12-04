@@ -57,7 +57,7 @@ class GameOver(BaseScreen):
 
 
         self.present_score.draw(self.window)
-        if self.final_score['time'] != 'lost':
+        if self.final_score['time'] != 'Lost':
             self.present_time.draw(self.window)
         self.leaderboard.draw(self.window)
         self.play_again.draw(self.window)
